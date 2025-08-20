@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Brain, Video, FileText, CheckCircle, Star } from 'lucide-react'
+import { SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react'
 
 const Home = () => {
    const features = [
@@ -46,16 +47,32 @@ const Home = () => {
                      Get instant feedback and improve your interview skills.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                     <Link
-                        to="/form"
-                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-2"
-                     >
-                        Start Free Interview
-                        <ArrowRight className="w-5 h-5" />
-                     </Link>
-                     <button className="text-slate-600 hover:text-slate-800 px-8 py-4 font-semibold transition-colors">
-                        Watch Demo
-                     </button>
+                     <SignedIn>
+                        <Link
+                           to="/form"
+                           className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                        >
+                           Start Interview Now
+                           <ArrowRight className="w-5 h-5" />
+                        </Link>
+                        <Link
+                           to="/profile"
+                           className="text-slate-600 hover:text-slate-800 px-8 py-4 font-semibold transition-colors"
+                        >
+                           View Profile
+                        </Link>
+                     </SignedIn>
+                     <SignedOut>
+                        <SignInButton mode="modal">
+                           <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                              Start Free Interview
+                              <ArrowRight className="w-5 h-5" />
+                           </button>
+                        </SignInButton>
+                        <button className="text-slate-600 hover:text-slate-800 px-8 py-4 font-semibold transition-colors">
+                           Watch Demo
+                        </button>
+                     </SignedOut>
                   </div>
                </div>
             </div>
@@ -149,13 +166,23 @@ const Home = () => {
                <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
                   Join thousands of professionals who have improved their interview skills with InterviewAI
                </p>
-               <Link
-                  to="/form"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 inline-flex items-center gap-2"
-               >
-                  Get Started Now
-                  <ArrowRight className="w-5 h-5" />
-               </Link>
+               <SignedIn>
+                  <Link
+                     to="/form"
+                     className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 inline-flex items-center gap-2"
+                  >
+                     Start Interview Now
+                     <ArrowRight className="w-5 h-5" />
+                  </Link>
+               </SignedIn>
+               <SignedOut>
+                  <SignInButton mode="modal">
+                     <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                        Get Started Now
+                        <ArrowRight className="w-5 h-5" />
+                     </button>
+                  </SignInButton>
+               </SignedOut>
             </div>
          </section>
       </div>

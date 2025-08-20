@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+import { Menu, X } from 'lucide-react'
 
 const Layout = ({ children }) => {
    const location = useLocation()
+   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
    return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
          {/* Header */}
          <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-               <div className="flex justify-between items-center h-16">
+               <div className="flex justify-center items-center h-16">
                   <div className="flex items-center space-x-2">
                      <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                         <span className="text-white font-bold text-sm">AI</span>
@@ -20,27 +23,104 @@ const Layout = ({ children }) => {
                   </div>
 
                   {/* Navigation */}
-                  <nav className="hidden md:flex items-center space-x-8">
-                     <Link
-                        to="/"
-                        className={`text-sm font-medium transition-colors ${location.pathname === '/'
+                  <nav className="hidden w-full md:flex items-center justify-end space-x-2 mr-10">
+                     <SignedIn>
+                        <Link
+                           to="/form"
+                           className={`text-sm font-medium transition-colors ${location.pathname === '/form'
                               ? 'text-blue-600'
                               : 'text-slate-600 hover:text-blue-600'
-                           }`}
-                     >
-                        Home
-                     </Link>
-                     <Link
-                        to="/form"
-                        className={`text-sm font-medium transition-colors ${location.pathname === '/form'
+                              }`}
+                        >
+                           Start Interview
+                        </Link>
+                        <Link
+                           to="/profile"
+                           className={`text-sm font-medium transition-colors ${location.pathname === '/profile'
                               ? 'text-blue-600'
                               : 'text-slate-600 hover:text-blue-600'
-                           }`}
-                     >
-                        Start Interview
-                     </Link>
+                              }`}
+                        >
+                           Profile
+                        </Link>
+                     </SignedIn>
                   </nav>
+
+                  {/* Authentication */}
+                  <div className="flex items-center space-x-4">
+                     <SignedOut>
+                        <SignInButton mode="modal">
+                           <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300">
+                              Sign In
+                           </button>
+                        </SignInButton>
+                     </SignedOut>
+                     <SignedIn>
+                        <UserButton
+                           appearance={{
+                              elements: {
+                                 avatarBox: "w-8 h-8"
+                              }
+                           }}
+                        />
+                     </SignedIn>
+
+                     {/* Mobile menu button */}
+                     <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="md:hidden p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                     >
+                        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                     </button>
+                  </div>
                </div>
+
+               {/* Mobile Navigation */}
+               {mobileMenuOpen && (
+                  <div className="md:hidden border-t border-slate-200 bg-white">
+                     <div className="px-4 py-4 space-y-4">
+                        <Link
+                           to="/"
+                           onClick={() => setMobileMenuOpen(false)}
+                           className={`block text-sm font-medium transition-colors ${location.pathname === '/'
+                              ? 'text-blue-600'
+                              : 'text-slate-600 hover:text-blue-600'
+                              }`}
+                        >
+                           Home
+                        </Link>
+                        <SignedIn>
+                           <Link
+                              to="/form"
+                              onClick={() => setMobileMenuOpen(false)}
+                              className={`block text-sm font-medium transition-colors ${location.pathname === '/form'
+                                 ? 'text-blue-600'
+                                 : 'text-slate-600 hover:text-blue-600'
+                                 }`}
+                           >
+                              Start Interview
+                           </Link>
+                           <Link
+                              to="/profile"
+                              onClick={() => setMobileMenuOpen(false)}
+                              className={`block text-sm font-medium transition-colors ${location.pathname === '/profile'
+                                 ? 'text-blue-600'
+                                 : 'text-slate-600 hover:text-blue-600'
+                                 }`}
+                           >
+                              Profile
+                           </Link>
+                        </SignedIn>
+                        <SignedOut>
+                           <SignInButton mode="modal">
+                              <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300">
+                                 Sign In
+                              </button>
+                           </SignInButton>
+                        </SignedOut>
+                     </div>
+                  </div>
+               )}
             </div>
          </header>
 
