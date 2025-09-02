@@ -142,5 +142,5 @@ const Layout = ({ children }) => {
       </div>
    )
 }
-
+{/* End of Layout Component*/}
 export default Layout
