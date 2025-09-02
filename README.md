@@ -1,68 +1,133 @@
-# FINAL-YEAR-PROJECT-2025-2026
-## **AI Interviewer Platform**
+# 🤖 AI Interview Platform
+### *Revolutionizing Technical Interviews with Artificial Intelligence*
 
-**Goal:** Advanced AI-powered interview platform with real-time video conversation and intelligent analysis.
+<div align="center">
 
----
+[![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red.svg)]()
+[![B.Tech Project](https://img.shields.io/badge/B.Tech-Final%20Year%20Project-blue.svg)]()
+[![AI Powered](https://img.shields.io/badge/AI%20Powered-Gemini%20API-green.svg)]()
+[![Open Source](https://img.shields.io/badge/Open%20Source-MIT-orange.svg)]()
 
-### **Tech Stack**
+*An intelligent interview platform that combines AI-powered question generation, real-time video monitoring, and voice transcription to create a comprehensive technical interview experience.*
 
-* **Frontend** → React.js with Vite — Premium UI, WebRTC video streaming, real-time AI conversation
-* **Backend (Main)** → Node.js + Express — handles user data, CV processing, interview session management
-* **AI Service** → Python + FastAPI — CV analysis, real-time conversation AI, performance evaluation
-* **Database** → MongoDB — comprehensive user profiles, interview analytics, performance metrics
-* **Video Technology** → WebRTC — Real-time peer-to-peer video communication
-* **AI Integration** → Google Gemini API — Dynamic conversation, personalized questions, instant feedback
+[🚀 Live Demo](#) | [📖 Documentation](./docs/v1/architecture-overview.md) | [🎥 Video Demo](#)
 
----
-
-### **Workflow**
-
-1. **User provides detailed information** → React collects comprehensive candidate profile
-2. **CV upload and analysis** → React sends file to Node.js backend
-3. **Node.js processes CV** → forwards to Python microservice for text extraction
-4. **Python extracts and analyzes CV** → sends to Gemini API for personalized questions
-5. **Real-time video interview** → WebRTC establishes direct video connection with AI interviewer
-6. **AI conversation flow** → Dynamic questions based on CV analysis and real-time responses
-7. **Live audio processing** → Speech-to-text conversion and real-time AI feedback
-8. **Performance analysis** → Comprehensive evaluation and scoring
-9. **Results and feedback** → Detailed report with recommendations and insights
+</div>
 
 ---
 
-### **Minimal API Routes**
+## 🌟 **Project Overview**
 
-**Node.js Backend**
+Our AI Interview Platform is a cutting-edge solution designed to modernize the technical interview process. By leveraging the power of artificial intelligence, computer vision, and real-time communication technologies, we've created an immersive interview experience that benefits both candidates and recruiters.
 
-* `POST /upload-cv` → Receives CV, forwards to Python
-* `GET /questions/:userId` → Fetch AI-generated questions from Python
-* `POST /start-interview` → Initialize interview session with WebRTC
-* `POST /conversation` → Handle real-time AI conversation
-* `POST /end-interview` → Process interview completion and generate results
+### ✨ **Key Features**
 
-**Python Microservice**
+🧠 **Smart Resume Analysis** - AI-powered PDF parsing and skill extraction  
+🎯 **Dynamic Question Generation** - Personalized questions based on tech stack and experience  
+👁️ **Real-time Video Monitoring** - Advanced face detection and attention tracking  
+🎤 **Live Voice Transcription** - Seamless speech-to-text conversion  
+📊 **Intelligent Evaluation** - AI-driven response analysis and scoring  
+📋 **Comprehensive Feedback** - Detailed performance reports and recommendations  
 
-* `POST /parse-cv` → Extracts text from CV
-* `POST /generate-questions` → Calls Gemini API for interview questions
-* `POST /process-conversation` → Real-time speech processing and AI response
-* `POST /evaluate-interview` → Comprehensive analysis and scoring
+---
+## 🌟 **Meet Our Team**
+
+<div align="center">
+
+### *Final Year B.Tech Students | Computer Science & Engineering*
+
+<table>
+<tr>
+<td align="center" width="25%">
+<img src="https://res.cloudinary.com/dnnvq0dg6/image/upload/v1756834186/113292029_emwhwh.jpg" width="120" height="120" style="border-radius: 50%; object-fit: cover;"/><br/>
+<b><a href="https://github.com/BuddhadebKoner">Buddhadeb Koner</a></b><br/>
+<i>Team Lead & AI Specialist</i>
+</td>
+<td align="center" width="25%">
+<img src="https://res.cloudinary.com/dnnvq0dg6/image/upload/v1756834186/163894732_lgofhv.jpg" width="120" height="120" style="border-radius: 50%; object-fit: cover;"/><br/>
+<b><a href="https://github.com/gourabofficial">Gourab Ganguly</a></b><br/>
+<i>Backend Developer & Database Specialist</i>
+</td>
+<td align="center" width="25%">
+<img src="https://res.cloudinary.com/dnnvq0dg6/image/upload/v1756834186/133022320_v8q0sl.jpg" width="120" height="120" style="border-radius: 50%; object-fit: cover;"/><br/>
+<b><a href="https://github.com/nila2004">Nilendu Goswami</a></b><br/>
+<i>Frontend Developer & UI/UX Designer</i>
+</td>
+<td align="center" width="25%">
+<img src="https://res.cloudinary.com/dnnvq0dg6/image/upload/v1756834186/167602340_bx6zi5.jpg" width="120" height="120" style="border-radius: 50%; object-fit: cover;"/><br/>
+<b><a href="https://github.com/RahulTantubay">Rahul Tantubay</a></b><br/>
+<i>Frontend Developer & UI/UX Designer</i>
+</td>
+</tr>
+</table>
+
+</div>
 
 ---
 
-### **Free Tools**
+## 📸 **Project Screenshots**
 
-* **CV Parsing** → PyPDF2 / pdfplumber (free)
-* **AI Q\&A** → Google Gemini API free tier
-* **Video Call** → WebRTC (free)
-* **Voice-to-Text** → Vosk (offline, free)
-* **Text-to-Speech** → Browser `speechSynthesis` API (free)
+<div align="center">
+
+### *Live Application Interface*
+
+<img src="https://res.cloudinary.com/dnnvq0dg6/image/upload/v1756835137/Screenshot_2025-09-02_231507_co0cz5.png" alt="AI Interview Platform Screenshot" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+
+*Our modern, responsive interface showcasing the AI Interview Platform*
+
+</div>
 
 ---
 
-If you want, I can now **give you the architecture diagram** so your team knows exactly:
 
-* Which tech runs where
-* How Node.js and Python communicate
-* Where Gemini API fits in
 
-This way you can start coding without confusion.
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **Frontend** | React 19, Vite, TailwindCSS | User Interface & Experience |
+| **Backend** | Node.js, Express, Socket.io | API Gateway & Real-time Communication |
+| **AI Service** | Python, FastAPI, Gemini API | Question Generation & Analysis |
+| **Video Service** | OpenCV, Python, Flask | Real-time Monitoring |
+| **Database** | MongoDB Atlas | Data Storage |
+| **Auth** | Clerk | User Authentication |
+| **Deployment** | Vercel, Railway | Cloud Hosting |
+
+<div align="center">
+
+---
+
+## 📄 **License**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🤝 **Contributing**
+
+No any pull requests will be accepted.
+
+---
+
+## 📧 **Contact**
+
+For any queries regarding this project, feel free to reach out:
+
+<div align="center">
+
+[![Email](https://img.shields.io/badge/Email-iambuddhadebkoner@gmail.com-red?style=for-the-badge&logo=gmail&logoColor=white)](mailto:iambuddhadebkoner@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-BuddhadebKoner-black?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BuddhadebKoner)
+
+**Team Lead: Buddhadeb Koner**
+
+</div>
+
+---
+
+<div align="center">
+
+### ⭐ If you like this project, please give it a star! ⭐
+
+**Made with ❤️ by Team AI Interview Platform**
+
+*B.Tech Final Year Project | 2025-2026*
+
+</div>
