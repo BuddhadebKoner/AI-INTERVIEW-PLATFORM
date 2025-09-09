@@ -1,5 +1,6 @@
 # 🤖 AI Interview Platform
-### *Revolutionizing Technical Interviews with Artificial Intelligence*
+
+### _Revolutionizing Technical Interviews with Artificial Intelligence_
 
 <div align="center">
 
@@ -8,7 +9,8 @@
 [![AI Powered](https://img.shields.io/badge/AI%20Powered-Gemini%20API-green.svg)]()
 [![Open Source](https://img.shields.io/badge/Open%20Source-MIT-orange.svg)]()
 
-*An intelligent interview platform that combines AI-powered question generation, real-time video monitoring, and voice transcription to create a comprehensive technical interview experience.*
+_An intelligent interview platform that combines AI-powered question generation, real-time video
+monitoring, and voice transcription to create a comprehensive technical interview experience._
 
 [🚀 Live Demo](#) | [📖 Documentation](./docs/v1/architecture-overview.md) | [🎥 Video Demo](#)
 
@@ -18,7 +20,10 @@
 
 ## 🌟 **Project Overview**
 
-Our AI Interview Platform is a cutting-edge solution designed to modernize the technical interview process. By leveraging the power of artificial intelligence, computer vision, and real-time communication technologies, we've created an immersive interview experience that benefits both candidates and recruiters.
+Our AI Interview Platform is a cutting-edge solution designed to modernize the technical interview
+process. By leveraging the power of artificial intelligence, computer vision, and real-time
+communication technologies, we've created an immersive interview experience that benefits both
+candidates and recruiters.
 
 ### ✨ **Key Features**
 
@@ -27,14 +32,15 @@ Our AI Interview Platform is a cutting-edge solution designed to modernize the t
 👁️ **Real-time Video Monitoring** - Advanced face detection and attention tracking  
 🎤 **Live Voice Transcription** - Seamless speech-to-text conversion  
 📊 **Intelligent Evaluation** - AI-driven response analysis and scoring  
-📋 **Comprehensive Feedback** - Detailed performance reports and recommendations  
+📋 **Comprehensive Feedback** - Detailed performance reports and recommendations
 
 ---
+
 ## 🌟 **Meet Our Team**
 
 <div align="center">
 
-### *Final Year B.Tech Students | Computer Science & Engineering*
+### _Final Year B.Tech Students | Computer Science & Engineering_
 
 <table>
 <tr>
@@ -69,27 +75,25 @@ Our AI Interview Platform is a cutting-edge solution designed to modernize the t
 
 <div align="center">
 
-### *Live Application Interface*
+### _Live Application Interface_
 
 <img src="https://res.cloudinary.com/dnnvq0dg6/image/upload/v1756835137/Screenshot_2025-09-02_231507_co0cz5.png" alt="AI Interview Platform Screenshot" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
 
-*Our modern, responsive interface showcasing the AI Interview Platform*
+_Our modern, responsive interface showcasing the AI Interview Platform_
 
 </div>
 
 ---
 
-
-
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| **Frontend** | React 19, Vite, TailwindCSS | User Interface & Experience |
-| **Backend** | Node.js, Express, Socket.io | API Gateway & Real-time Communication |
-| **AI Service** | Python, FastAPI, Gemini API | Question Generation & Analysis |
-| **Video Service** | OpenCV, Python, Flask | Real-time Monitoring |
-| **Database** | MongoDB Atlas | Data Storage |
-| **Auth** | Clerk | User Authentication |
-| **Deployment** | Vercel, Railway | Cloud Hosting |
+| Component         | Technology                  | Purpose                               |
+| ----------------- | --------------------------- | ------------------------------------- |
+| **Frontend**      | React 19, Vite, TailwindCSS | User Interface & Experience           |
+| **Backend**       | Node.js, Express, Socket.io | API Gateway & Real-time Communication |
+| **AI Service**    | Python, FastAPI, Gemini API | Question Generation & Analysis        |
+| **Video Service** | OpenCV, Python, Flask       | Real-time Monitoring                  |
+| **Database**      | MongoDB Atlas               | Data Storage                          |
+| **Auth**          | Clerk                       | User Authentication                   |
+| **Deployment**    | Vercel, Railway             | Cloud Hosting                         |
 
 <div align="center">
 
@@ -128,6 +132,6 @@ For any queries regarding this project, feel free to reach out:
 
 **Made with ❤️ by Team AI Interview Platform**
 
-*B.Tech Final Year Project | 2025-2026*
+_B.Tech Final Year Project | 2025-2026_
 
 </div>

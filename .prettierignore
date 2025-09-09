@@ -1,0 +1,100 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+**/dist/
+**/build/
+
+# Cache directories
+.cache/
+**/.cache/
+.parcel-cache/
+**/.parcel-cache/
+
+# Coverage reports
+coverage/
+**/coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+**/.env*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Generated files
+*.min.js
+*.min.css
+
+# Documentation builds
+**/docs/_build/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Test reports
+test-results/
+**/test-results/
+
+# Vercel
+.vercel
+
+# Local development
+.local
+
+# Database
+*.db
+*.sqlite
+
+# Images and media (optional - you might want to format SVG)
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
+# *.ico
+# *.webp
+
+# Specific to your project structure
+design/
+presentation/
+progress/
+sample/
+testing/
+
+# Backend specific
+backend/uploads/
+backend/logs/
+
+# Frontend specific
+frontend/public/vite.svg

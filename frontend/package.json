@@ -6,8 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html,json}\" \"*.{js,jsx,ts,tsx,css,html,json}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html,json}\" \"*.{js,jsx,ts,tsx,css,html,json}\"",
+    "format:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html,json}\" \"*.{js,jsx,ts,tsx,css,html,json}\" --log-level warn",
+    "test:format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html,json}\" \"*.{js,jsx,ts,tsx,css,html,json}\"",
+    "clean": "rm -rf dist node_modules",
+    "precommit": "npm run format:check && npm run lint",
+    "prebuild": "npm run format:check && npm run lint"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.43.0",
