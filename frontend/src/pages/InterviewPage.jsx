@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
-  Video,
-  VideoOff,
+  MessageCircle,
   Mic,
   MicOff,
-  Phone,
   PhoneOff,
-  MessageCircle,
   Send,
-  Volume2,
-  VolumeX,
+  Video,
+  VideoOff,
+  Volume2
 } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const InterviewPage = () => {
   const navigate = useNavigate();
@@ -70,14 +68,14 @@ const InterviewPage = () => {
         peerConnection.current.close();
       }
     };
-  }, []);
+  }, [initializeWebRTC]);
 
   // Auto scroll to latest message
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [conversation]);
 
-  const initializeWebRTC = async () => {
+  const initializeWebRTC = useCallback(async () => {
     try {
       // Get user media
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -113,7 +111,7 @@ const InterviewPage = () => {
     } catch (error) {
       console.error('Error accessing media devices:', error);
     }
-  };
+  }, []);
 
   const simulateAIConnection = () => {
     setIsConnecting(true);
@@ -231,22 +229,20 @@ const InterviewPage = () => {
             </div>
             <div className='flex items-center gap-3'>
               <div
-                className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium ${
-                  isConnected
+                className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium ${isConnected
                     ? 'bg-green-100 text-green-800'
                     : isConnecting
                       ? 'bg-yellow-100 text-yellow-800'
                       : 'bg-red-100 text-red-800'
-                }`}
+                  }`}
               >
                 <div
-                  className={`h-2 w-2 rounded-full ${
-                    isConnected
+                  className={`h-2 w-2 rounded-full ${isConnected
                       ? 'animate-pulse bg-green-500'
                       : isConnecting
                         ? 'animate-pulse bg-yellow-500'
                         : 'bg-red-500'
-                  }`}
+                    }`}
                 />
                 {isConnected
                   ? 'Connected'
@@ -327,11 +323,10 @@ const InterviewPage = () => {
               <div className='flex items-center justify-center gap-4'>
                 <button
                   onClick={toggleVideo}
-                  className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 ${
-                    isVideoOn
+                  className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 ${isVideoOn
                       ? 'bg-slate-200 text-slate-700 hover:bg-slate-300'
                       : 'bg-red-500 text-white hover:bg-red-600'
-                  }`}
+                    }`}
                 >
                   {isVideoOn ? (
                     <Video className='h-5 w-5' />
@@ -342,11 +337,10 @@ const InterviewPage = () => {
 
                 <button
                   onClick={toggleAudio}
-                  className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 ${
-                    isAudioOn
+                  className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 ${isAudioOn
                       ? 'bg-slate-200 text-slate-700 hover:bg-slate-300'
                       : 'bg-red-500 text-white hover:bg-red-600'
-                  }`}
+                    }`}
                 >
                   {isAudioOn ? (
                     <Mic className='h-5 w-5' />
@@ -385,19 +379,17 @@ const InterviewPage = () => {
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl p-3 ${
-                      msg.sender === 'user'
+                    className={`max-w-[80%] rounded-2xl p-3 ${msg.sender === 'user'
                         ? 'rounded-br-sm bg-blue-600 text-white'
                         : 'rounded-bl-sm bg-slate-100 text-slate-900'
-                    }`}
+                      }`}
                   >
                     <p className='text-sm leading-relaxed'>{msg.message}</p>
                     <p
-                      className={`mt-1 text-xs ${
-                        msg.sender === 'user'
+                      className={`mt-1 text-xs ${msg.sender === 'user'
                           ? 'text-blue-100'
                           : 'text-slate-500'
-                      }`}
+                        }`}
                     >
                       {msg.timestamp}
                     </p>
@@ -439,11 +431,10 @@ const InterviewPage = () => {
                 <button
                   onClick={sendMessage}
                   disabled={!userMessage.trim() || aiSpeaking}
-                  className={`rounded-xl px-4 py-3 transition-all duration-200 ${
-                    userMessage.trim() && !aiSpeaking
+                  className={`rounded-xl px-4 py-3 transition-all duration-200 ${userMessage.trim() && !aiSpeaking
                       ? 'bg-blue-600 text-white hover:bg-blue-700'
                       : 'cursor-not-allowed bg-slate-300 text-slate-500'
-                  }`}
+                    }`}
                 >
                   <Send className='h-5 w-5' />
                 </button>

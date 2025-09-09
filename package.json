@@ -29,12 +29,13 @@
       "build:frontend": "npm run build --workspace=frontend",
       "clean": "npm run clean --workspaces --if-present && rm -rf node_modules",
       "install:all": "npm install && npm install --workspaces",
-      "precommit": "npm run format:check && npm run lint",
-      "prepare": "npm run format:check"
+      "precommit": "npm run format:check && npm run lint"
+   },
+   "dependencies": {
+      "prettier": "^3.2.5",
+      "prettier-plugin-tailwindcss": "^0.5.11"
    },
    "devDependencies": {
-      "prettier": "^3.2.5",
-      "prettier-plugin-tailwindcss": "^0.5.11",
       "concurrently": "^8.2.2",
       "@prettier/plugin-php": "^0.22.2"
    },

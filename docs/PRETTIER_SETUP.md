@@ -5,9 +5,12 @@ This document outlines the Prettier configuration for the monorepo project.
 ## Configuration Files
 
 ### `.prettierrc.json`
-The main Prettier configuration file located at the root of the project. This configuration applies to all workspaces (frontend and backend).
+
+The main Prettier configuration file located at the root of the project. This configuration applies
+to all workspaces (frontend and backend).
 
 **Key Settings:**
+
 - **Semi**: `true` - Always add semicolons
 - **Trailing Comma**: `all` - Add trailing commas wherever possible
 - **Single Quote**: `true` - Use single quotes instead of double quotes
@@ -19,6 +22,7 @@ The main Prettier configuration file located at the root of the project. This co
 - **Arrow Parens**: `avoid` - Omit parentheses when possible in arrow functions
 
 **File-specific Overrides:**
+
 - **JSON files**: 120 character width, no trailing commas
 - **Markdown files**: 100 character width, always wrap prose
 - **HTML files**: 120 character width, ignore whitespace sensitivity
@@ -26,7 +30,9 @@ The main Prettier configuration file located at the root of the project. This co
 - **JS/JSX files**: Specific JSX and semicolon rules
 
 ### `.prettierignore`
+
 Specifies files and directories that Prettier should ignore:
+
 - `node_modules/`, `dist/`, `build/`
 - Cache directories
 - Generated files
@@ -37,6 +43,7 @@ Specifies files and directories that Prettier should ignore:
 ## Scripts
 
 ### Root Level Scripts
+
 ```bash
 # Format all files in the project
 npm run format
@@ -60,6 +67,7 @@ npm run format:docs
 ```
 
 ### Frontend Scripts
+
 ```bash
 cd frontend
 
@@ -74,6 +82,7 @@ npm run format:fix
 ```
 
 ### Backend Scripts
+
 ```bash
 cd backend
 
@@ -90,6 +99,7 @@ npm run format:fix
 ## VS Code Integration
 
 ### Settings (`.vscode/settings.json`)
+
 - **Format on Save**: Enabled
 - **Format on Paste**: Enabled
 - **Prettier Config Path**: Points to root `.prettierrc.json`
@@ -97,6 +107,7 @@ npm run format:fix
 - **File Settings**: Automatic final newline, trim whitespace
 
 ### Recommended Extensions (`.vscode/extensions.json`)
+
 - `esbenp.prettier-vscode` - Prettier formatter
 - `ms-vscode.vscode-eslint` - ESLint integration
 - `bradlc.vscode-tailwindcss` - Tailwind CSS support
@@ -104,17 +115,21 @@ npm run format:fix
 ## Development Workflow
 
 ### Before Committing
+
 1. Run `npm run format:check` to ensure all files are formatted
 2. If issues are found, run `npm run format` to fix them
 3. Commit your changes
 
 ### Pre-commit Hooks
+
 Both workspaces have `precommit` scripts that:
+
 1. Check formatting with `format:check`
 2. Run linting
 3. Fail if formatting or linting issues exist
 
 ### Build Process
+
 The frontend has a `prebuild` script that ensures formatting and linting before building.
 
 ## File Extensions Supported
@@ -130,6 +145,7 @@ The frontend has a `prebuild` script that ensures formatting and linting before 
 ## Plugins
 
 ### Tailwind CSS Plugin
+
 - **`prettier-plugin-tailwindcss`**: Automatically sorts Tailwind CSS classes
 - Applies to all HTML, JSX, and template files
 - Ensures consistent class ordering

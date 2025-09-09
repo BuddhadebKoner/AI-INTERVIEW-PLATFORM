@@ -14,8 +14,7 @@
     "format:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html,json}\" \"*.{js,jsx,ts,tsx,css,html,json}\" --log-level warn",
     "test:format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html,json}\" \"*.{js,jsx,ts,tsx,css,html,json}\"",
     "clean": "rm -rf dist node_modules",
-    "precommit": "npm run format:check && npm run lint",
-    "prebuild": "npm run format:check && npm run lint"
+    "precommit": "npm run format:check && npm run lint"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.43.0",

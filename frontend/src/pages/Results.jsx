@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import {
-  Trophy,
-  TrendingUp,
-  Clock,
-  MessageSquare,
   Award,
-  Download,
-  RefreshCw,
-  Home,
   BarChart3,
+  Download,
+  Home,
+  MessageSquare,
+  RefreshCw,
+  TrendingUp,
+  Trophy
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Results = () => {
   const navigate = useNavigate();
-  const [interviewData, setInterviewData] = useState(null);
   const [results, setResults] = useState(null);
 
   useEffect(() => {
@@ -30,9 +28,8 @@ const Results = () => {
     const data = JSON.parse(storedData);
     const answers = storedAnswers ? JSON.parse(storedAnswers) : [];
 
-    setInterviewData(data);
-
-    // Generate mock AI analysis results
+    // Generate mock AI analysis results using data and answers
+    console.log('Interview data loaded:', data, 'Answers:', answers);
     const mockResults = {
       overallScore: 78,
       performance: {

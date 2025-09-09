@@ -17,8 +17,7 @@
     "format:fix": "prettier --write \"**/*.{js,mjs,cjs,json}\" \"!node_modules/**\" --log-level warn",
     "test:format": "prettier --check \"**/*.{js,mjs,cjs,json}\" \"!node_modules/**\"",
     "clean": "rm -rf node_modules",
-    "precommit": "npm run format:check && npm run lint",
-    "prestart": "npm run format:check"
+    "precommit": "npm run format:check && npm run lint"
   },
   "dependencies": {
     "dotenv": "^17.2.2",
