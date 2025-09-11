@@ -1,9 +1,33 @@
-import React from 'react';
 import { useUser } from '@clerk/clerk-react';
-import { User, Mail, Calendar, Award, TrendingUp, Clock } from 'lucide-react';
+import {
+  Award,
+  Calendar,
+  Clock,
+  Edit3,
+  Mail,
+  TrendingUp,
+  Upload,
+  User,
+} from 'lucide-react';
+import { useState } from 'react';
+import FileUpload from '../components/FileUpload';
+import ResumeForm from '../components/ResumeForm';
 
 const Profile = () => {
   const { user } = useUser();
+  const [resumeData, setResumeData] = useState(null);
+  const [showResumeUpload, setShowResumeUpload] = useState(false);
+
+  const handleUploadSuccess = data => {
+    setResumeData(data);
+    setShowResumeUpload(false);
+  };
+
+  const handleUpdateProfile = formData => {
+    console.log('Profile Update Data:', formData);
+    // Here you would typically save to database
+    alert('Profile updated successfully! (Check console for data)');
+  };
 
   const stats = [
     {
@@ -104,9 +128,68 @@ const Profile = () => {
         </div>
 
         {/* Recent Activity */}
-        <div className='rounded-2xl bg-white p-8 shadow-xl'>
+        <div className='mb-8 rounded-2xl bg-white p-8 shadow-xl'>
+          <div className='mb-6 flex items-center justify-between'>
+            <h3 className='text-xl font-semibold text-slate-900'>
+              Resume & Profile Information
+            </h3>
+            <button
+              onClick={() => setShowResumeUpload(!showResumeUpload)}
+              className='flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-white transition-all duration-300 hover:scale-105 hover:shadow-lg'
+            >
+              <Upload className='h-4 w-4' />
+              {showResumeUpload ? 'Hide Upload' : 'Upload Resume'}
+            </button>
+          </div>
+
+          {showResumeUpload && !resumeData && (
+            <div className='mb-6'>
+              <FileUpload onUploadSuccess={handleUploadSuccess} />
+            </div>
+          )}
+
+          {resumeData ? (
+            <div>
+              <div className='mb-4 flex items-center gap-2 text-green-600'>
+                <Award className='h-5 w-5' />
+                <span className='font-medium'>
+                  Resume data extracted successfully
+                </span>
+              </div>
+              <ResumeForm
+                resumeData={resumeData}
+                onSave={handleUpdateProfile}
+                isProfile={true}
+              />
+            </div>
+          ) : (
+            !showResumeUpload && (
+              <div className='py-12 text-center'>
+                <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-between rounded-full bg-slate-100'>
+                  <Edit3 className='mx-auto h-8 w-8 text-slate-400' />
+                </div>
+                <h4 className='mb-2 text-lg font-semibold text-slate-900'>
+                  Complete your profile
+                </h4>
+                <p className='mb-6 text-slate-600'>
+                  Upload your resume to auto-fill your profile information or
+                  fill manually
+                </p>
+                <button
+                  onClick={() => setShowResumeUpload(true)}
+                  className='inline-block rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg'
+                >
+                  Get Started
+                </button>
+              </div>
+            )
+          )}
+        </div>
+
+        {/* Interview Activity */}
+        <div className='mb-8 rounded-2xl bg-white p-8 shadow-xl'>
           <h3 className='mb-6 text-xl font-semibold text-slate-900'>
-            Recent Activity
+            Interview Activity
           </h3>
 
           <div className='py-12 text-center'>
@@ -121,9 +204,9 @@ const Profile = () => {
             </p>
             <a
               href='/form'
-              className='inline-block rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg'
+              className='inline-block rounded-xl bg-gradient-to-r from-green-600 to-teal-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg'
             >
-              Start First Interview
+              Start Interview
             </a>
           </div>
         </div>

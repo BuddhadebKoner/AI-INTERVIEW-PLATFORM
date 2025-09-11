@@ -7,6 +7,7 @@ import {
   UserButton,
 } from '@clerk/clerk-react';
 import { Menu, X } from 'lucide-react';
+import { Button } from './ui/button';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -62,9 +63,9 @@ const Layout = ({ children }) => {
               {/* Authentication */}
               <SignedOut>
                 <SignInButton mode='modal'>
-                  <button className='rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-blue-700'>
+                  <Button variant='secondary' size='sm'>
                     Sign In
-                  </button>
+                  </Button>
                 </SignInButton>
               </SignedOut>
               <SignedIn>

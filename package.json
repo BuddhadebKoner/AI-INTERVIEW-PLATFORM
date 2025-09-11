@@ -1,46 +1,47 @@
 {
-   "name": "final-year-project-monorepo",
-   "version": "1.0.0",
-   "description": "Final Year Project Monorepo with Frontend and Backend",
-   "private": true,
-   "workspaces": [
-      "frontend",
-      "backend"
-   ],
-   "scripts": {
-      "format": "prettier --write .",
-      "format:check": "prettier --check .",
-      "format:fix": "prettier --write . --log-level warn",
-      "format:frontend": "prettier --write \"frontend/**/*.{js,jsx,ts,tsx,html,css,json}\"",
-      "format:backend": "prettier --write \"backend/**/*.{js,mjs,cjs,json}\"",
-      "format:docs": "prettier --write \"docs/**/*.md\" README.md",
-      "format:check:frontend": "prettier --check \"frontend/**/*.{js,jsx,ts,tsx,html,css,json}\"",
-      "format:check:backend": "prettier --check \"backend/**/*.{js,mjs,cjs,json}\"",
-      "format:check:docs": "prettier --check \"docs/**/*.md\" README.md",
-      "format:staged": "prettier --write",
-      "lint": "npm run lint --workspaces --if-present",
-      "lint:fix": "npm run lint:fix --workspaces --if-present",
-      "test": "npm run test --workspaces --if-present",
-      "test:format": "npm run format:check",
-      "dev:frontend": "npm run dev --workspace=frontend",
-      "dev:backend": "npm run dev --workspace=backend",
-      "dev:all": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-      "build": "npm run build --workspaces --if-present",
-      "build:frontend": "npm run build --workspace=frontend",
-      "clean": "npm run clean --workspaces --if-present && rm -rf node_modules",
-      "install:all": "npm install && npm install --workspaces",
-      "precommit": "npm run format:check && npm run lint"
-   },
-   "dependencies": {
-      "prettier": "^3.2.5",
-      "prettier-plugin-tailwindcss": "^0.5.11"
-   },
-   "devDependencies": {
-      "concurrently": "^8.2.2",
-      "@prettier/plugin-php": "^0.22.2"
-   },
-   "engines": {
-      "node": ">=18.0.0",
-      "npm": ">=9.0.0"
-   }
+  "name": "final-year-project-monorepo",
+  "version": "1.0.0",
+  "description": "Final Year Project Monorepo with Frontend and Backend",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write . --log-level warn",
+    "format:frontend": "prettier --write \"frontend/**/*.{js,jsx,ts,tsx,html,css,json}\"",
+    "format:backend": "prettier --write \"backend/**/*.{js,mjs,cjs,json}\"",
+    "format:docs": "prettier --write \"docs/**/*.md\" README.md",
+    "format:check:frontend": "prettier --check \"frontend/**/*.{js,jsx,ts,tsx,html,css,json}\"",
+    "format:check:backend": "prettier --check \"backend/**/*.{js,mjs,cjs,json}\"",
+    "format:check:docs": "prettier --check \"docs/**/*.md\" README.md",
+    "format:staged": "prettier --write",
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:format": "npm run format:check",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:all": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build": "npm run build --workspaces --if-present",
+    "build:frontend": "npm run build --workspace=frontend",
+    "clean": "npm run clean --workspaces --if-present && rm -rf node_modules",
+    "install:all": "npm install && npm install --workspaces",
+    "precommit": "npm run format:check && npm run lint"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.22.2",
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
 }
