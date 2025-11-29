@@ -16,9 +16,9 @@ if (!rootElement) {
   throw new Error("Root element with id 'root' not found");
 }
 createRoot(rootElement).render(
-  <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <App />
-    </ClerkProvider>
-  </StrictMode>,
+  // <StrictMode>
+  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <App />
+  </ClerkProvider>
+  // </StrictMode>,
 );

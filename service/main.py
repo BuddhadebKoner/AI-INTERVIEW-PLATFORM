@@ -8,8 +8,6 @@ import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 import json
-import hashlib
-from datetime import datetime, timedelta
 
 # Load environment variables
 load_dotenv()
@@ -18,22 +16,22 @@ app = FastAPI(title="PDF Processing API", version="1.0.0")
 
 # Configure Gemini AI
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-1.5-flash')
 
-# In-memory cache for resume data (in production, use Redis or database)
-resume_cache = {}
+def list_available_models():
+    """List all available Gemini models"""
+    try:
+        models = genai.list_models()
+        print("✅ Available Gemini models:")
+        for m in models:
+            if 'generateContent' in m.supported_generation_methods:
+                print(f"  - {m.name}")
+    except Exception as e:
+        print(f"❌ Error listing models: {e}")
 
-def get_file_hash(file_content: bytes) -> str:
-    """Generate SHA-256 hash of file content for caching"""
-    return hashlib.sha256(file_content).hexdigest()
+# List available models on startup
+list_available_models()
 
-def is_cache_valid(cache_entry: dict, max_age_hours: int = 24) -> bool:
-    """Check if cache entry is still valid"""
-    if not cache_entry or 'timestamp' not in cache_entry:
-        return False
-
-    cache_time = datetime.fromisoformat(cache_entry['timestamp'])
-    return datetime.now() - cache_time < timedelta(hours=max_age_hours)
+model = genai.GenerativeModel('models/gemini-2.5-flash')
 
 def extract_resume_data(resume_text: str) -> dict:
     """
@@ -117,21 +115,13 @@ app.add_middleware(
 async def root():
     return {"message": "PDF Processing API is running"}
 
-@app.get("/cache-status")
-async def cache_status():
-    """Get cache statistics"""
-    cache_info = []
-    for file_hash, data in resume_cache.items():
-        cache_info.append({
-            "file_hash": file_hash[:8] + "...",
-            "filename": data.get('filename', 'Unknown'),
-            "timestamp": data.get('timestamp'),
-            "is_valid": is_cache_valid(data)
-        })
-
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
     return {
-        "total_cached_files": len(resume_cache),
-        "cache_entries": cache_info
+        "status": "healthy",
+        "service": "PDF Processing API",
+        "version": "1.0.0"
     }
 
 @app.post("/upload-pdf")
@@ -143,25 +133,10 @@ async def upload_pdf(file: UploadFile = File(...)) -> Dict[str, Any]:
         raise HTTPException(status_code=400, detail="File must be a PDF")
 
     try:
+        print(f"📄 Processing file: {file.filename}")
+
         # Read the PDF file
         pdf_content = await file.read()
-
-        # Generate file hash for caching
-        file_hash = get_file_hash(pdf_content)
-
-        # Check cache first
-        if file_hash in resume_cache and is_cache_valid(resume_cache[file_hash]):
-            print(f"📦 CACHE HIT: Using cached data for file: {file.filename}")
-            cached_data = resume_cache[file_hash]
-            return {
-                "success": True,
-                "message": "Resume processed successfully (from cache)",
-                "data": cached_data['data'],
-                "cached": True
-            }
-
-        print(f"🔄 CACHE MISS: Processing new file: {file.filename}")
-
         pdf_reader = PyPDF2.PdfReader(io.BytesIO(pdf_content))
 
         # Extract all text from PDF
@@ -175,33 +150,22 @@ async def upload_pdf(file: UploadFile = File(...)) -> Dict[str, Any]:
             "file_size_bytes": len(pdf_content),
             "file_size_mb": round(len(pdf_content) / (1024 * 1024), 2),
             "total_pages": len(pdf_reader.pages),
-            "content_type": file.content_type,
-            "file_hash": file_hash
+            "content_type": file.content_type
         }
 
         # Extract resume data using Gemini AI
         print("🤖 Extracting resume data with Gemini AI...")
         resume_data = extract_resume_data(full_text)
 
-        response_data = {
-            "pdf_info": pdf_info,
-            "resume_data": resume_data
-        }
-
-        # Cache the result
-        resume_cache[file_hash] = {
-            "data": response_data,
-            "timestamp": datetime.now().isoformat(),
-            "filename": file.filename
-        }
-
-        print(f"💾 CACHED: Saved data for file hash: {file_hash[:8]}...")
+        print("✅ Resume processed successfully")
 
         return {
             "success": True,
             "message": "Resume processed successfully",
-            "data": response_data,
-            "cached": False
+            "data": {
+                "pdf_info": pdf_info,
+                "resume_data": resume_data
+            }
         }
 
     except Exception as e:

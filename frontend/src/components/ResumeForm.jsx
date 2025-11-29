@@ -1,3 +1,5 @@
+import { userApi } from '@/api/userApi';
+import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,9 +9,16 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 
-const ResumeForm = ({ resumeData, onSave, isProfile = false }) => {
+const ResumeForm = ({
+  resumeData,
+  onSave,
+  isProfile = false,
+  buttonText = null,
+}) => {
+  const { user } = useUser();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,6 +29,9 @@ const ResumeForm = ({ resumeData, onSave, isProfile = false }) => {
     education: [],
     summary: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     if (resumeData && resumeData.resume_data) {
@@ -80,13 +92,33 @@ const ResumeForm = ({ resumeData, onSave, isProfile = false }) => {
     }));
   };
 
-  const handleSave = () => {
-    console.log('Form Data to Save:', formData);
-    if (onSave) {
-      onSave(formData);
-    } else {
-      // Default behavior for InterviewForm
-      alert('Resume data saved! Check console for details.');
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      setSuccess(false);
+
+      console.log('Form Data to Save:', formData);
+
+      if (onSave) {
+        // If custom onSave is provided (for Profile page)
+        await onSave(formData);
+      } else {
+        // Default behavior for InterviewForm - save to database
+        const response = await userApi.saveProfile(formData);
+        console.log('Profile saved:', response);
+        setSuccess(true);
+
+        // Optionally redirect or show success message
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000);
+      }
+    } catch (err) {
+      console.error('Error saving profile:', err);
+      setError(err.message || 'Failed to save profile. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,6 +135,22 @@ const ResumeForm = ({ resumeData, onSave, isProfile = false }) => {
         </CardDescription>
       </CardHeader>
       <CardContent className='space-y-6'>
+        {/* Success Message */}
+        {success && (
+          <Alert className='bg-green-50 text-green-800 border-green-200'>
+            <p className='font-medium'>
+              ✓ Profile saved successfully!
+            </p>
+          </Alert>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <Alert className='bg-red-50 text-red-800 border-red-200'>
+            <p className='font-medium'>✗ {error}</p>
+          </Alert>
+        )}
+
         {/* Basic Information */}
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
           <div className='space-y-2'>
@@ -269,13 +317,16 @@ const ResumeForm = ({ resumeData, onSave, isProfile = false }) => {
         <div className='flex justify-center pt-4'>
           <Button
             onClick={handleSave}
-            className={`px-8 ${
-              isProfile
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-                : ''
-            }`}
+            disabled={loading}
+            className={`px-8 ${isProfile
+              ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+              : 'bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700'
+              }`}
           >
-            {isProfile ? 'Update Profile' : 'Save Resume Data'}
+            {loading
+              ? 'Saving...'
+              : buttonText ||
+              (isProfile ? 'Update Profile' : 'Proceed to Interview')}
           </Button>
         </div>
       </CardContent>
