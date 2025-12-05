@@ -8,6 +8,10 @@ import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 import json
+from gtts import gTTS
+import base64
+from pydantic import BaseModel
+from io import BytesIO
 
 # Load environment variables
 load_dotenv()
@@ -171,6 +175,128 @@ async def upload_pdf(file: UploadFile = File(...)) -> Dict[str, Any]:
     except Exception as e:
         print(f"❌ Error processing resume: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error processing PDF: {str(e)}")
+
+# Pydantic models for voice endpoints
+class TextToSpeechRequest(BaseModel):
+    text: str
+    language: str = "en"
+
+class SpeechToTextRequest(BaseModel):
+    audio_data: str  # base64 encoded audio
+
+class InterviewQuestionRequest(BaseModel):
+    question: str
+    previous_answer: str = ""
+    context: dict = {}
+
+@app.post("/text-to-speech")
+async def text_to_speech(request: TextToSpeechRequest) -> Dict[str, Any]:
+    """
+    Convert text to speech and return as base64 encoded audio
+    """
+    try:
+        print(f"🔊 Converting text to speech: {request.text[:50]}...")
+
+        # Create gTTS object
+        tts = gTTS(text=request.text, lang=request.language, slow=False)
+
+        # Save to BytesIO buffer
+        audio_buffer = BytesIO()
+        tts.write_to_fp(audio_buffer)
+        audio_buffer.seek(0)
+
+        # Convert to base64
+        audio_base64 = base64.b64encode(audio_buffer.read()).decode('utf-8')
+
+        print("✅ Text-to-speech conversion successful")
+
+        return {
+            "success": True,
+            "audio_data": audio_base64,
+            "format": "mp3"
+        }
+    except Exception as e:
+        print(f"❌ Error in text-to-speech: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error converting text to speech: {str(e)}")
+
+@app.post("/speech-to-text")
+async def speech_to_text(data: dict) -> Dict[str, Any]:
+    """
+    Receive transcribed text from browser's Web Speech API
+    This endpoint just validates and returns the text since transcription happens in browser
+    """
+    try:
+        text = data.get("text", "")
+
+        if not text:
+            raise HTTPException(status_code=400, detail="No text provided")
+
+        print(f"✅ Speech text received: {text}")
+
+        return {
+            "success": True,
+            "text": text,
+            "confidence": 1.0
+        }
+    except Exception as e:
+        print(f"❌ Error in speech-to-text: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing text: {str(e)}")
+
+@app.post("/analyze-answer")
+async def analyze_answer(data: dict) -> Dict[str, Any]:
+    """
+    Analyze interview answer using Gemini AI and provide feedback
+    """
+    try:
+        question = data.get("question", "")
+        answer = data.get("answer", "")
+        expected_answer = data.get("expectedAnswer", "")
+
+        print(f"🤖 Analyzing answer for question: {question[:50]}...")
+
+        prompt = f"""
+        You are an expert interview evaluator. Analyze the candidate's answer and provide constructive feedback.
+
+        Question: {question}
+        Expected Answer Guidelines: {expected_answer}
+        Candidate's Answer: {answer}
+
+        Provide a JSON response with:
+        {{
+            "score": <number from 0-10>,
+            "feedback": "Brief constructive feedback on the answer",
+            "strengths": ["list", "of", "strengths"],
+            "improvements": ["list", "of", "areas", "to", "improve"],
+            "is_satisfactory": <true/false>
+        }}
+
+        Return only valid JSON, no additional text.
+        """
+
+        response = model.generate_content(prompt)
+        response_text = response.text.strip()
+
+        # Clean up markdown formatting
+        if response_text.startswith("```json"):
+            response_text = response_text[7:]
+        if response_text.startswith("```"):
+            response_text = response_text[3:]
+        if response_text.endswith("```"):
+            response_text = response_text[:-3]
+
+        response_text = response_text.strip()
+
+        analysis = json.loads(response_text)
+
+        print("✅ Answer analysis complete")
+
+        return {
+            "success": True,
+            "analysis": analysis
+        }
+    except Exception as e:
+        print(f"❌ Error analyzing answer: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error analyzing answer: {str(e)}")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

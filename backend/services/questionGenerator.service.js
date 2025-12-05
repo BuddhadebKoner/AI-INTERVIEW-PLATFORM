@@ -13,7 +13,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
  * @param {string} params.candidateName - Candidate's name
  * @returns {Promise<Array>} - Array of generated questions
  */
-export const generateInterviewQuestions = async ({
+export const  generateInterviewQuestions = async ({
    interviewType,
    complexity,
    skills,
@@ -43,27 +43,48 @@ export const generateInterviewQuestions = async ({
       const latestCompany = latestExperience?.company || 'your previous company';
 
       // Build dynamic prompt for AI-generated questions (3-9)
-      const prompt = `Generate 7 real-world ${interviewType} interview questions for ${complexity} level candidate.
+      const skillsList = skills && skills.length > 0 ? skills.slice(0, 8).join(', ') : 'general technologies';
+      const experienceSummary = experience && experience.length > 0
+         ? experience.map(exp => `${exp.title} at ${exp.company}`).slice(0, 3).join('; ')
+         : 'general experience';
 
-Profile: ${candidateName}, Skills: ${skills.slice(0, 5).join(', ')}, Company: ${latestCompany}
+      const prompt = `You are an expert technical interviewer. Generate 7 diverse, specific, and relevant ${interviewType} interview questions for a ${complexity} level candidate.
 
-Q3: Experience - "What challenges did you face at ${latestCompany}?"
-Q4: Technical - Direct question like "What is [tool/concept]?" based on ${interviewType}
-Q5: Core concept - "What is [specific technology]?" from their skills
-Q6: Problem-solving - Practical scenario using ${skills[0] || 'their skills'}
-Q7: Architecture - Design question for ${complexity} level
-Q8: Best practices - "What are [specific] best practices?"
-Q9: Trends - Recent technology in ${interviewType}
+CANDIDATE PROFILE:
+- Name: ${candidateName}
+- Skills: ${skillsList}
+- Recent Role: ${latestCompany}
+- Experience: ${experienceSummary}
+- Interview Type: ${interviewType}
+- Complexity: ${complexity}
 
-Rules:
-- Ask direct "What is X?" or "Explain X" questions
-- Use actual tool names (axios, webpack, redis, docker, etc.)
-- Reference ${latestCompany} in Q3
-- Match ${complexity} difficulty
-- Be specific, not generic
+QUESTION REQUIREMENTS:
+Q3 (Experience-based): Ask about a SPECIFIC challenge or project at ${latestCompany}. Make it relevant to ${interviewType}.
 
-JSON array only, no markdown:
-[{"questionNumber":3,"question":"...","category":"experience-based","expectedAnswer":"..."},...]`;
+Q4 (Technical Deep-dive): Ask about ONE specific technology from their skills (${skills[0]}, ${skills[1]}, or ${skills[2]}). Use format: "Explain how [technology] works" or "What is [specific concept] in [technology]?"
+
+Q5 (Practical Implementation): Ask how they would implement a real-world feature using their skills. Be specific (e.g., "How would you implement authentication using JWT?" or "How would you optimize database queries?")
+
+Q6 (Problem-solving): Present a specific technical scenario or bug they might encounter with ${skills[0] || interviewType}. Ask how they would debug or solve it.
+
+Q7 (System Design/Architecture): For ${complexity} level, ask about designing or architecting a system component relevant to ${interviewType} (e.g., API design, database schema, microservices, caching strategy)
+
+Q8 (Best Practices): Ask about specific best practices for ONE technology they know (${skills[1] || interviewType}). Not generic - ask about security, performance, or scalability.
+
+Q9 (Modern Trends): Ask about a CURRENT trend, tool, or framework in ${interviewType} (released/popular in 2023-2025). Reference something they might have used or should know.
+
+STRICT RULES:
+- Use ACTUAL technology names from their skills: ${skillsList}
+- ${complexity === 'beginner' ? 'Keep questions fundamental and straightforward' : ''}
+- ${complexity === 'intermediate' ? 'Ask mid-level implementation and design questions' : ''}
+- ${complexity === 'pro' ? 'Ask advanced architecture, optimization, and scaling questions' : ''}
+- Make questions SPECIFIC, not generic templates
+- Each question should be unique and relevant to ${interviewType}
+- Reference their actual company ${latestCompany} in Q3
+- Expected answers should be detailed and specific to the question
+
+OUTPUT FORMAT (JSON array only, NO markdown, NO code blocks):
+[{"questionNumber":3,"question":"Detailed specific question here","category":"experience-based","expectedAnswer":"Specific expected answer with key points"},...]`;
 
       // Call Gemini API
       const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
@@ -132,72 +153,101 @@ JSON array only, no markdown:
  * Generate fallback questions when AI fails
  */
 const generateFallbackQuestions = (interviewType, complexity, skills, company) => {
+   const skill1 = skills && skills[0] ? skills[0] : 'your primary technology';
+   const skill2 = skills && skills[1] ? skills[1] : 'supporting technologies';
+
+   const difficultyMap = {
+      beginner: {
+         q4: `What is ${skill1} and why is it used in ${interviewType} development?`,
+         q5: `Explain the basic concepts and features of ${skill1}.`,
+         q6: `How would you approach learning a new technology like ${skill2}?`,
+         q7: `What is the difference between common ${interviewType} architectures?`,
+         q8: `What are the fundamental best practices in ${interviewType} development?`,
+      },
+      intermediate: {
+         q4: `How does ${skill1} handle state management and data flow in ${interviewType} applications?`,
+         q5: `Explain how you would implement authentication and authorization using ${skill2}.`,
+         q6: `Describe a scenario where you optimized application performance using ${skill1}.`,
+         q7: `How would you design a scalable ${interviewType} architecture for a growing application?`,
+         q8: `What security best practices do you implement when working with ${skill1}?`,
+      },
+      pro: {
+         q4: `Explain the internal architecture and advanced patterns in ${skill1} for enterprise-scale applications.`,
+         q5: `How would you design a microservices architecture using ${skill1} and ${skill2}?`,
+         q6: `Describe your approach to debugging and resolving complex production issues with ${skill1}.`,
+         q7: `How do you architect for high availability, fault tolerance, and disaster recovery in ${interviewType}?`,
+         q8: `What advanced optimization techniques do you use for ${skill1} in production environments?`,
+      },
+   };
+
+   const levelQuestions = difficultyMap[complexity] || difficultyMap.intermediate;
+
    return [
       {
          questionNumber: 1,
          question: 'Tell me about yourself.',
          category: 'common',
-         expectedAnswer: 'Brief professional summary.',
+         expectedAnswer: 'Candidate should provide a brief professional summary including their background, current role, and key achievements.',
       },
       {
          questionNumber: 2,
          question: `How many years of experience do you have with ${interviewType}?`,
          category: 'common',
-         expectedAnswer: 'Years of experience in the field.',
+         expectedAnswer: `Candidate should specify their years of experience in ${interviewType} and mention key projects or technologies they've worked with.`,
       },
       {
          questionNumber: 3,
-         question: `What challenges did you face while working at ${company}?`,
+         question: `What was the most challenging technical problem you solved at ${company}?`,
          category: 'experience-based',
-         expectedAnswer: 'Specific technical or team challenges and solutions.',
+         expectedAnswer: 'Candidate should describe a specific technical challenge, their approach to solving it, technologies used, and the outcome.',
       },
       {
          questionNumber: 4,
-         question: `Explain a core concept in ${interviewType} at ${complexity} level.`,
+         question: levelQuestions.q4,
          category: 'technical',
-         expectedAnswer: 'Technical explanation appropriate to difficulty level.',
+         expectedAnswer: `Candidate should demonstrate deep understanding of ${skill1} relevant to ${complexity} level, including practical examples.`,
       },
       {
          questionNumber: 5,
-         question: `What are best practices you follow in ${interviewType}?`,
+         question: levelQuestions.q5,
          category: 'technical',
-         expectedAnswer: 'Industry best practices and standards.',
+         expectedAnswer: `Candidate should explain implementation details, security considerations, and best practices for ${complexity} level.`,
       },
       {
          questionNumber: 6,
-         question: `Describe a complex problem you solved using ${skills[0] || 'your skills'}.`,
+         question: levelQuestions.q6,
          category: 'experience-based',
-         expectedAnswer: 'Problem-solving approach and solution.',
+         expectedAnswer: 'Candidate should provide specific examples, metrics, and tools used to solve the problem or achieve optimization.',
       },
       {
          questionNumber: 7,
-         question: `How do you handle performance optimization in ${interviewType}?`,
+         question: levelQuestions.q7,
          category: 'technical',
-         expectedAnswer: 'Performance strategies and tools.',
+         expectedAnswer: `Candidate should discuss architecture patterns, trade-offs, scalability considerations appropriate for ${complexity} level.`,
       },
       {
          questionNumber: 8,
-         question: `What's your approach to testing in ${interviewType}?`,
+         question: levelQuestions.q8,
          category: 'technical',
-         expectedAnswer: 'Testing methodologies and practices.',
+         expectedAnswer: 'Candidate should mention industry standards, security practices, performance optimization, and monitoring approaches.',
       },
       {
          questionNumber: 9,
-         question: `What recent trends or technologies are you following in ${interviewType}?`,
+         question: `What recent ${interviewType} technologies or trends have you explored or implemented in the last year?`,
          category: 'technical',
-         expectedAnswer: 'Current industry trends and technologies.',
+         expectedAnswer: 'Candidate should discuss current industry trends, new tools they\'ve learned, and how they stay updated with technology.',
       },
       {
          questionNumber: 10,
          question: 'Tell me about your passion. What drives you in your career?',
          category: 'behavioral',
-         expectedAnswer: 'Personal motivation and career goals.',
+         expectedAnswer: 'Candidate should express genuine interest in technology, continuous learning, and personal motivations in software development.',
       },
       {
          questionNumber: 11,
          question: 'How much salary would you expect for this role?',
          category: 'common',
-         expectedAnswer: 'Salary expectation based on experience.',
+         expectedAnswer: 'Candidate should provide a reasonable salary expectation based on their experience, skills, and market rates.',
       },
    ];
 };
