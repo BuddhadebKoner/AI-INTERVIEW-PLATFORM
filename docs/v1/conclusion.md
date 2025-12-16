@@ -1,0 +1,8 @@
+- **Summary:** The system integrates resume parsing, profile management, interview generation, and real-time evaluation. Separation of concerns (Node orchestration vs. Python inference) increases adaptability and scaling options.
+- **Strengths:** Context-aware question generation, robust fallbacks, structured data modeling, secure auth, realtime UX.
+- **Limitations:** Model dependency, potential bias in evaluations, limited locales/regions, no current video monitoring.
+- **Next Steps:**
+  - Add video monitoring pipeline (capture, storage, consent workflows, and analysis).
+  - Harden LLM parsing with schema validators and retries.
+  - Instrument metrics (latency, model quality, scoring distributions) and observability.
+  - Consider containerization, CI/CD, and environment hardening.

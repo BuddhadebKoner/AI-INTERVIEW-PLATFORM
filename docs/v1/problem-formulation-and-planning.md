@@ -1,0 +1,16 @@
+- **Problem Statement:** Enable candidates to simulate interviews tailored to their profile, with automated question generation and answer feedback, minimizing manual interviewer effort.
+- **Key Requirements:**
+  - Parse PDFs and extract structured resume data with high accuracy.
+  - Persist and manage profiles securely under authenticated identities.
+  - Generate interview sessions with context-aware, difficulty-controlled questions.
+  - Provide real-time status and post-hoc analysis, scores, and feedback.
+- **Constraints & Assumptions:** Gemini availability and quota, PDF text extractability, stable auth tokens (Clerk), MongoDB connectivity.
+- **Planning Approach:**
+  - Phase 1: Resume pipeline (FastAPI + Gemini), backend CRUD, basic interview creation.
+  - Phase 2: Question generation and Socket.IO orchestration; answer analysis.
+  - Phase 3: UX polish, resilience (fallbacks), indexes, health checks.
+  - Phase 4: Future video monitoring and extended localization.
+- **Risks & Mitigations:**
+  - LLM JSON parsing errors → strict prompts + sanitization + fallbacks.
+  - Auth/token expiry → axios pre-request refresh and 401 retry.
+  - Model bias → diversify evaluation criteria and expose feedback rationales.

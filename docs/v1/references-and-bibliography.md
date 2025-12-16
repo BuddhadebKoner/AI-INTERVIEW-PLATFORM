@@ -1,0 +1,14 @@
+- **Libraries & Docs:**
+  - Google Generative AI (Gemini): https://ai.google.dev
+  - FastAPI: https://fastapi.tiangolo.com
+  - PyPDF2: https://pypi.org/project/PyPDF2
+  - gTTS: https://pypi.org/project/gTTS
+  - Express: https://expressjs.com
+  - Mongoose: https://mongoosejs.com
+  - Clerk for Node/Express: https://clerk.com/docs
+  - Socket.IO: https://socket.io
+  - Axios: https://axios-http.com
+- **Articles & Patterns:**
+  - LLM JSON prompting & validation techniques
+  - Event-driven UI with Socket.IO in interviews
+  - MongoDB schema design for nested resume/interview data
