@@ -87,7 +87,7 @@ OUTPUT FORMAT (JSON array only, NO markdown, NO code blocks):
 [{"questionNumber":3,"question":"Detailed specific question here","category":"experience-based","expectedAnswer":"Specific expected answer with key points"},...]`;
 
       // Call Gemini API
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const generatedText = response.text();
