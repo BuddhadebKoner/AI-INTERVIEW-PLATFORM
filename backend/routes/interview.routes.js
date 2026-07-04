@@ -1,10 +1,10 @@
 import express from 'express';
 import {
-   createInterview,
-   deleteInterview,
-   getInterviewById,
-   getUserInterviews,
-   updateInterviewStatus,
+  createInterview,
+  deleteInterview,
+  getInterviewById,
+  getUserInterviews,
+  updateInterviewStatus,
 } from '../controllers/interview.controller.js';
 import { requireAuth } from '../middleware/auth.js';
 

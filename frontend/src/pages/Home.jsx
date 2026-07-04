@@ -18,7 +18,7 @@ import {
   Upload,
   Users,
   Video,
-  Zap
+  Zap,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -27,42 +27,48 @@ const Home = () => {
     {
       icon: <Brain className='h-8 w-8' />,
       title: 'AI-Powered Questions',
-      description: 'Smart questions tailored to your CV and experience level. Our AI analyzes your resume and generates relevant questions.',
+      description:
+        'Smart questions tailored to your CV and experience level. Our AI analyzes your resume and generates relevant questions.',
       gradient: 'from-blue-500 to-cyan-500',
       emoji: '🤖',
     },
     {
       icon: <Video className='h-8 w-8' />,
       title: 'Video Interview Practice',
-      description: 'Practice with realistic video interview scenarios and improve your communication skills',
+      description:
+        'Practice with realistic video interview scenarios and improve your communication skills',
       gradient: 'from-purple-500 to-pink-500',
       emoji: '🎥',
     },
     {
       icon: <FileText className='h-8 w-8' />,
       title: 'Instant Feedback',
-      description: 'Get detailed analysis and improvement suggestions within seconds of completing your interview',
+      description:
+        'Get detailed analysis and improvement suggestions within seconds of completing your interview',
       gradient: 'from-orange-500 to-red-500',
       emoji: '📊',
     },
     {
       icon: <Target className='h-8 w-8' />,
       title: 'Personalized Learning',
-      description: 'Track your progress and focus on areas that need improvement with our analytics dashboard',
+      description:
+        'Track your progress and focus on areas that need improvement with our analytics dashboard',
       gradient: 'from-green-500 to-emerald-500',
       emoji: '🎯',
     },
     {
       icon: <BarChart className='h-8 w-8' />,
       title: 'Performance Analytics',
-      description: 'Detailed insights into your interview performance with actionable recommendations',
+      description:
+        'Detailed insights into your interview performance with actionable recommendations',
       gradient: 'from-red-500 to-pink-500',
       emoji: '📈',
     },
     {
       icon: <Shield className='h-8 w-8' />,
       title: 'Secure & Private',
-      description: 'Your data is encrypted and secure. Practice confidently knowing your privacy is protected',
+      description:
+        'Your data is encrypted and secure. Practice confidently knowing your privacy is protected',
       gradient: 'from-indigo-500 to-purple-500',
       emoji: '🔒',
     },
@@ -72,29 +78,37 @@ const Home = () => {
     {
       icon: <Upload className='h-12 w-12' />,
       title: 'Upload Your Resume',
-      description: 'Upload your resume and let our AI understand your skills and experience.',
-      image: 'https://imgs.search.brave.com/qopQllZoWkfFbYS2jqr8oFxLewdUaQuDjAUQkAtTbCM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lbmhh/bmN2LmNvbS9fbmV4/dC9zdGF0aWMvaW1h/Z2VzL3Jlc3VtZS0z/NDhjMDMzZGM3Mzhk/YTM0M2Y2NjIxZTQ3/NGY0OGE4Ny5zdmc',
+      description:
+        'Upload your resume and let our AI understand your skills and experience.',
+      image:
+        'https://imgs.search.brave.com/qopQllZoWkfFbYS2jqr8oFxLewdUaQuDjAUQkAtTbCM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lbmhh/bmN2LmNvbS9fbmV4/dC9zdGF0aWMvaW1h/Z2VzL3Jlc3VtZS0z/NDhjMDMzZGM3Mzhk/YTM0M2Y2NjIxZTQ3/NGY0OGE4Ny5zdmc',
       showButton: true,
     },
     {
       icon: <Brain className='h-12 w-12' />,
       title: 'Get Personalized Questions',
-      description: 'Our AI creates interview questions that match your background and the role you want.',
-      image: 'https://media.istockphoto.com/id/2244328501/photo/businessman-using-smartphone-and-laptop-with-glowing-ai-icons-artificial-intelligence-machine.jpg?s=612x612&w=0&k=20&c=GpngWPVsq4ZVwsMCXyEsXRenM_DNQ_8ixAJnp5CVYH8=',
+      description:
+        'Our AI creates interview questions that match your background and the role you want.',
+      image:
+        'https://media.istockphoto.com/id/2244328501/photo/businessman-using-smartphone-and-laptop-with-glowing-ai-icons-artificial-intelligence-machine.jpg?s=612x612&w=0&k=20&c=GpngWPVsq4ZVwsMCXyEsXRenM_DNQ_8ixAJnp5CVYH8=',
       showButton: false,
     },
     {
       icon: <Mic className='h-12 w-12' />,
       title: 'Practice Interview',
-      description: 'Answer questions through video or text and practice until you feel confident.',
-      image: 'https://imgs.search.brave.com/xXeO8bx9bxNLlhO352DV2YNrXpEN0_uAyaa4PDFgswE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3IvYWktdGV4dC1n/ZW5lcmF0b3ItZmxh/dC1jb25jZXB0LXZl/Y3Rvci1zcG90LWls/bHVzdHJhdGlvbl8x/NTExNTAtMTMxODgu/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MCZxPTgw',
+      description:
+        'Answer questions through video or text and practice until you feel confident.',
+      image:
+        'https://imgs.search.brave.com/xXeO8bx9bxNLlhO352DV2YNrXpEN0_uAyaa4PDFgswE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3IvYWktdGV4dC1n/ZW5lcmF0b3ItZmxh/dC1jb25jZXB0LXZl/Y3Rvci1zcG90LWls/bHVzdHJhdGlvbl8x/NTExNTAtMTMxODgu/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MCZxPTgw',
       showButton: false,
     },
     {
       icon: <Award className='h-12 w-12' />,
       title: 'Review Your Results',
-      description: 'Get instant feedback with detailed scores and tips to improve your interview skills.',
-      image: 'https://media.istockphoto.com/id/2153852505/photo/business-approve-document-guarantee-process-quality-for-certificate-concept-assurance-check.jpg?s=612x612&w=0&k=20&c=d7h9SjbZJBRcTSzGac2Svf_8YiiVhOx-lIaoTJ_Azbg=',
+      description:
+        'Get instant feedback with detailed scores and tips to improve your interview skills.',
+      image:
+        'https://media.istockphoto.com/id/2153852505/photo/business-approve-document-guarantee-process-quality-for-certificate-concept-assurance-check.jpg?s=612x612&w=0&k=20&c=d7h9SjbZJBRcTSzGac2Svf_8YiiVhOx-lIaoTJ_Azbg=',
       showButton: false,
     },
   ];
@@ -103,22 +117,26 @@ const Home = () => {
     {
       icon: <Zap className='h-6 w-6' />,
       title: 'Lightning Fast',
-      description: 'Get your personalized interview questions generated in seconds, not hours.',
+      description:
+        'Get your personalized interview questions generated in seconds, not hours.',
     },
     {
       icon: <Users className='h-6 w-6' />,
       title: 'Trusted by Thousands',
-      description: 'Join over 10,000+ professionals who have improved their interview skills.',
+      description:
+        'Join over 10,000+ professionals who have improved their interview skills.',
     },
     {
       icon: <Clock className='h-6 w-6' />,
       title: 'Practice Anytime',
-      description: '24/7 access means you can practice whenever it suits your schedule.',
+      description:
+        '24/7 access means you can practice whenever it suits your schedule.',
     },
     {
       icon: <Lightbulb className='h-6 w-6' />,
       title: 'Smart Insights',
-      description: 'AI-powered analytics provide actionable insights to boost your performance.',
+      description:
+        'AI-powered analytics provide actionable insights to boost your performance.',
     },
   ];
 
@@ -157,9 +175,21 @@ const Home = () => {
   ];
 
   const stats = [
-    { icon: <Users className='h-6 w-6' />, value: '10K+', label: 'Active Users' },
-    { icon: <Award className='h-6 w-6' />, value: '95%', label: 'Success Rate' },
-    { icon: <TrendingUp className='h-6 w-6' />, value: '50K+', label: 'Interviews Completed' },
+    {
+      icon: <Users className='h-6 w-6' />,
+      value: '10K+',
+      label: 'Active Users',
+    },
+    {
+      icon: <Award className='h-6 w-6' />,
+      value: '95%',
+      label: 'Success Rate',
+    },
+    {
+      icon: <TrendingUp className='h-6 w-6' />,
+      value: '50K+',
+      label: 'Interviews Completed',
+    },
   ];
 
   // Animation variants
@@ -237,7 +267,10 @@ const Home = () => {
             animate='visible'
             variants={containerVariants}
           >
-            <motion.div variants={itemVariants} className='mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 px-6 py-2 text-sm font-semibold text-blue-700 shadow-lg'>
+            <motion.div
+              variants={itemVariants}
+              className='mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 px-6 py-2 text-sm font-semibold text-blue-700 shadow-lg'
+            >
               <Sparkles className='h-4 w-4' />
               <span>Your Success Story Starts Here</span>
             </motion.div>
@@ -257,7 +290,8 @@ const Home = () => {
               className='mx-auto mb-10 max-w-3xl text-xl leading-relaxed text-slate-600 sm:text-2xl'
             >
               Practice with our AI interviewer that analyzes your CV and creates
-              personalized questions. Get instant feedback and ace your dream job.
+              personalized questions. Get instant feedback and ace your dream
+              job.
             </motion.p>
 
             <motion.div
@@ -323,7 +357,6 @@ const Home = () => {
           </motion.div>
 
           {/* Stats Section */}
-
         </div>
       </section>
 
@@ -347,7 +380,8 @@ const Home = () => {
               variants={itemVariants}
               className='mx-auto max-w-2xl text-xl text-slate-600'
             >
-              From technical coding rounds to behavioral assessments, we've got you covered
+              From technical coding rounds to behavioral assessments, we've got
+              you covered
             </motion.p>
           </motion.div>
 
@@ -365,7 +399,9 @@ const Home = () => {
                 className='group relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-50 to-slate-100 p-8 transition-all duration-300'
                 whileHover={{ y: -10, scale: 1.02 }}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-10`}></div>
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-10`}
+                ></div>
                 <div className='relative'>
                   <div className='mb-4 text-5xl'>{type.icon}</div>
                   <h3 className='mb-3 text-xl font-bold text-slate-900'>
@@ -445,7 +481,7 @@ const Home = () => {
                   <h3 className='mb-4 text-3xl font-bold text-slate-900'>
                     {item.title}
                   </h3>
-                  <p className='text-lg leading-relaxed text-slate-600 mb-6'>
+                  <p className='mb-6 text-lg leading-relaxed text-slate-600'>
                     {item.description}
                   </p>
                   {item.showButton && (
@@ -521,7 +557,9 @@ const Home = () => {
                 className='group relative overflow-hidden rounded-3xl bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-2xl'
                 whileHover={{ y: -10 }}
               >
-                <div className={`absolute inset-0 bg-gradient-to-r ${feature.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`}></div>
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${feature.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`}
+                ></div>
                 <div className='relative'>
                   <div className='mb-6 flex items-center gap-4'>
                     <motion.div
@@ -651,7 +689,9 @@ const Home = () => {
                   >
                     {stat.value}
                   </motion.div>
-                  <div className='mt-2 text-lg text-slate-300'>{stat.label}</div>
+                  <div className='mt-2 text-lg text-slate-300'>
+                    {stat.label}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -812,11 +852,7 @@ const Home = () => {
 
       {/* CTA Section */}
 
-
-        {/* Floating elements */}
-
-
-
+      {/* Floating elements */}
     </div>
   );
 };

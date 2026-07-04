@@ -1,9 +1,9 @@
 import express from 'express';
 import {
-   deleteUserProfile,
-   getUserProfile,
-   saveUserProfile,
-   updateUserProfile,
+  deleteUserProfile,
+  getUserProfile,
+  saveUserProfile,
+  updateUserProfile,
 } from '../controllers/user.controller.js';
 import { requireAuth } from '../middleware/auth.js';
 

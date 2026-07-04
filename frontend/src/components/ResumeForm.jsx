@@ -137,16 +137,14 @@ const ResumeForm = ({
       <CardContent className='space-y-6'>
         {/* Success Message */}
         {success && (
-          <Alert className='bg-green-50 text-green-800 border-green-200'>
-            <p className='font-medium'>
-              ✓ Profile saved successfully!
-            </p>
+          <Alert className='border-green-200 bg-green-50 text-green-800'>
+            <p className='font-medium'>✓ Profile saved successfully!</p>
           </Alert>
         )}
 
         {/* Error Message */}
         {error && (
-          <Alert className='bg-red-50 text-red-800 border-red-200'>
+          <Alert className='border-red-200 bg-red-50 text-red-800'>
             <p className='font-medium'>✗ {error}</p>
           </Alert>
         )}
@@ -318,15 +316,16 @@ const ResumeForm = ({
           <Button
             onClick={handleSave}
             disabled={loading}
-            className={`px-8 ${isProfile
-              ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-              : 'bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700'
-              }`}
+            className={`px-8 ${
+              isProfile
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+                : 'bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700'
+            }`}
           >
             {loading
               ? 'Saving...'
               : buttonText ||
-              (isProfile ? 'Update Profile' : 'Proceed to Interview')}
+                (isProfile ? 'Update Profile' : 'Proceed to Interview')}
           </Button>
         </div>
       </CardContent>

@@ -19,6 +19,6 @@ createRoot(rootElement).render(
   // <StrictMode>
   <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
     <App />
-  </ClerkProvider>
+  </ClerkProvider>,
   // </StrictMode>,
 );

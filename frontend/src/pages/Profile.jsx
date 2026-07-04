@@ -146,7 +146,7 @@ const Profile = () => {
               <img
                 src={user?.imageUrl}
                 alt={userProfile?.name || user?.fullName}
-                className='h-24 w-24 rounded-full border-4 border-gradient-to-r from-blue-600 to-purple-600 object-cover'
+                className='border-gradient-to-r h-24 w-24 rounded-full border-4 from-blue-600 to-purple-600 object-cover'
               />
             </div>
 
@@ -156,11 +156,13 @@ const Profile = () => {
               </h2>
 
               <div className='space-y-2'>
-                {(userProfile?.email || user?.primaryEmailAddress?.emailAddress) && (
+                {(userProfile?.email ||
+                  user?.primaryEmailAddress?.emailAddress) && (
                   <div className='flex items-center justify-center gap-2 text-slate-600 md:justify-start'>
                     <Mail className='h-4 w-4' />
                     <span>
-                      {userProfile?.email || user?.primaryEmailAddress?.emailAddress}
+                      {userProfile?.email ||
+                        user?.primaryEmailAddress?.emailAddress}
                     </span>
                   </div>
                 )}
@@ -183,7 +185,9 @@ const Profile = () => {
                   <Calendar className='h-4 w-4' />
                   <span>
                     Member since{' '}
-                    {new Date(userProfile?.createdAt || user?.createdAt).toLocaleDateString()}
+                    {new Date(
+                      userProfile?.createdAt || user?.createdAt,
+                    ).toLocaleDateString()}
                   </span>
                 </div>
               </div>
@@ -255,7 +259,7 @@ const Profile = () => {
             </div>
           )}
 
-          {(resumeData || isEditing) ? (
+          {resumeData || isEditing ? (
             <div>
               {resumeData && (
                 <div className='mb-4 flex items-center gap-2 text-green-600'>
@@ -327,15 +331,19 @@ const Profile = () => {
                             </span>
                           )}
                         </div>
-                        {exp.responsibilities && exp.responsibilities.length > 0 && (
-                          <ul className='mt-3 space-y-1'>
-                            {exp.responsibilities.map((resp, idx) => (
-                              <li key={idx} className='text-sm text-slate-600'>
-                                • {resp}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
+                        {exp.responsibilities &&
+                          exp.responsibilities.length > 0 && (
+                            <ul className='mt-3 space-y-1'>
+                              {exp.responsibilities.map((resp, idx) => (
+                                <li
+                                  key={idx}
+                                  className='text-sm text-slate-600'
+                                >
+                                  • {resp}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                       </div>
                     ))}
                   </div>

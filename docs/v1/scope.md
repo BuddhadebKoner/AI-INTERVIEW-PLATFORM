@@ -1,10 +1,19 @@
-- **Project Objective:** Build an AI-powered interview assistant that ingests a candidate’s resume, extracts structured profile data, persists it in MongoDB, and conducts configurable interview sessions with dynamically generated questions and real-time feedback.
+- **Project Objective:** Build an AI-powered interview assistant that ingests a candidate’s resume,
+  extracts structured profile data, persists it in MongoDB, and conducts configurable interview
+  sessions with dynamically generated questions and real-time feedback.
 - **Core Capabilities:**
-  - **Resume ingestion:** Upload PDF resume to Python FastAPI; parse text and extract structured fields (name, email, skills, experience, education, summary) via Gemini.
-  - **Profile management:** Save, retrieve, update, and delete user profile records tied to Clerk identity in MongoDB.
-  - **Interview orchestration:** Create interview sessions from user profile; auto-generate tailored questions (Gemini or fallback logic), track status, answers, scores.
-  - **Real-time events:** Socket.IO channels for interview room, question/answer status, analysis updates.
+  - **Resume ingestion:** Upload PDF resume to Python FastAPI; parse text and extract structured
+    fields (name, email, skills, experience, education, summary) via Gemini.
+  - **Profile management:** Save, retrieve, update, and delete user profile records tied to Clerk
+    identity in MongoDB.
+  - **Interview orchestration:** Create interview sessions from user profile; auto-generate tailored
+    questions (Gemini or fallback logic), track status, answers, scores.
+  - **Real-time events:** Socket.IO channels for interview room, question/answer status, analysis
+    updates.
   - **Answer analysis:** Evaluate answers via Gemini and return scoring plus feedback.
-- **Users & Roles:** Authenticated users (Clerk) conduct interviews; potential admin role reserved for moderation and reporting.
-- **Out-of-Scope (current):** Production monitoring, fine-grained RBAC, video monitoring, multi-language locales beyond placeholders, deep analytics dashboards.
-- **Future Scope:** Integrate browser or server-side video monitoring, expand languages/regions, richer system design scoring, longitudinal progress tracking, and recruiter/admin reporting.
+- **Users & Roles:** Authenticated users (Clerk) conduct interviews; potential admin role reserved
+  for moderation and reporting.
+- **Out-of-Scope (current):** Production monitoring, fine-grained RBAC, video monitoring,
+  multi-language locales beyond placeholders, deep analytics dashboards.
+- **Future Scope:** Integrate browser or server-side video monitoring, expand languages/regions,
+  richer system design scoring, longitudinal progress tracking, and recruiter/admin reporting.

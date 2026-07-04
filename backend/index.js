@@ -30,7 +30,7 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     credentials: true,
-  })
+  }),
 );
 
 // Clerk middleware - must be before routes
@@ -59,7 +59,8 @@ app.get('/api/health', (req, res) => {
     success: true,
     message: 'Server is healthy',
     environment: process.env.NODE_ENV,
-    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    mongodb:
+      mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
     clerk: process.env.CLERK_SECRET_KEY ? 'configured' : 'not configured',
   });
 });
@@ -79,7 +80,9 @@ io.on('connection', socket => {
 
   // Handle interview question flow
   socket.on('question-asked', data => {
-    console.log(`📝 Question ${data.questionNumber} asked in interview ${data.interviewId}`);
+    console.log(
+      `📝 Question ${data.questionNumber} asked in interview ${data.interviewId}`,
+    );
     io.to(data.interviewId).emit('question-status', {
       questionNumber: data.questionNumber,
       status: 'asked',
@@ -89,7 +92,7 @@ io.on('connection', socket => {
   // Handle answer submission
   socket.on('answer-submitted', data => {
     console.log(
-      `✅ Answer submitted for question ${data.questionNumber} in interview ${data.interviewId}`
+      `✅ Answer submitted for question ${data.questionNumber} in interview ${data.interviewId}`,
     );
     io.to(data.interviewId).emit('answer-status', {
       questionNumber: data.questionNumber,
@@ -101,7 +104,7 @@ io.on('connection', socket => {
   // Handle answer analysis
   socket.on('answer-analyzed', data => {
     console.log(
-      `🎯 Answer analyzed for question ${data.questionNumber} in interview ${data.interviewId}`
+      `🎯 Answer analyzed for question ${data.questionNumber} in interview ${data.interviewId}`,
     );
     io.to(data.interviewId).emit('analysis-result', {
       questionNumber: data.questionNumber,

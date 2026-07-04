@@ -1,4 +1,12 @@
-import { AlertCircle, ArrowRight, FileText, Loader2, Settings, Upload, User } from 'lucide-react';
+import {
+  AlertCircle,
+  ArrowRight,
+  FileText,
+  Loader2,
+  Settings,
+  Upload,
+  User,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { interviewApi } from '../api/interviewApi';
@@ -142,7 +150,7 @@ const InterviewForm = () => {
   if (showInterviewConfig && userProfile) {
     return (
       <div className='min-h-screen bg-gradient-to-br from-gray-50 to-blue-50'>
-        <div className='container mx-auto py-8 px-4'>
+        <div className='container mx-auto px-4 py-8'>
           <div className='mb-8 text-center'>
             <h1 className='mb-2 text-3xl font-bold text-gray-900 lg:text-4xl'>
               Configure Your Interview
@@ -244,10 +252,11 @@ const InterviewForm = () => {
                             complexity: level,
                           })
                         }
-                        className={`rounded-lg border-2 px-4 py-3 font-medium transition-all ${interviewConfig.complexity === level
-                          ? 'border-blue-600 bg-blue-50 text-blue-600'
-                          : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-                          }`}
+                        className={`rounded-lg border-2 px-4 py-3 font-medium transition-all ${
+                          interviewConfig.complexity === level
+                            ? 'border-blue-600 bg-blue-50 text-blue-600'
+                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                        }`}
                       >
                         {level.charAt(0).toUpperCase() + level.slice(1)}
                       </button>
@@ -329,7 +338,7 @@ const InterviewForm = () => {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 to-blue-50'>
-      <div className='container mx-auto py-8 px-4'>
+      <div className='container mx-auto px-4 py-8'>
         <div className='mb-8 text-center'>
           <h1 className='mb-2 text-3xl font-bold text-gray-900 lg:text-4xl'>
             Interview Preparation
@@ -362,7 +371,7 @@ const InterviewForm = () => {
                       onClick={handleUseExistingProfile}
                       className='group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl'
                     >
-                      <div className='absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 opacity-10 transition-transform duration-300 group-hover:scale-150'></div>
+                      <div className='absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 opacity-10 transition-transform duration-300 group-hover:scale-150'></div>
                       <div className='relative'>
                         <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500'>
                           <User className='h-10 w-10 text-white' />
@@ -380,12 +389,13 @@ const InterviewForm = () => {
                           <p className='text-sm text-gray-600'>
                             {userProfile.name}
                           </p>
-                          {userProfile.skills && userProfile.skills.length > 0 && (
-                            <p className='mt-1 text-xs text-gray-500'>
-                              {userProfile.skills.slice(0, 3).join(', ')}
-                              {userProfile.skills.length > 3 && '...'}
-                            </p>
-                          )}
+                          {userProfile.skills &&
+                            userProfile.skills.length > 0 && (
+                              <p className='mt-1 text-xs text-gray-500'>
+                                {userProfile.skills.slice(0, 3).join(', ')}
+                                {userProfile.skills.length > 3 && '...'}
+                              </p>
+                            )}
                         </div>
                         <div className='mt-6'>
                           <span className='inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-medium text-green-800'>
@@ -400,7 +410,7 @@ const InterviewForm = () => {
                       onClick={handleUploadNewResume}
                       className='group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl'
                     >
-                      <div className='absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-gradient-to-br from-green-500 to-teal-500 opacity-10 transition-transform duration-300 group-hover:scale-150'></div>
+                      <div className='absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 rounded-full bg-gradient-to-br from-green-500 to-teal-500 opacity-10 transition-transform duration-300 group-hover:scale-150'></div>
                       <div className='relative'>
                         <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-teal-500'>
                           <Upload className='h-10 w-10 text-white' />
@@ -409,7 +419,8 @@ const InterviewForm = () => {
                           Upload New Resume
                         </h3>
                         <p className='mb-4 text-gray-600'>
-                          Upload a fresh resume to update your profile and start interview
+                          Upload a fresh resume to update your profile and start
+                          interview
                         </p>
                         <div className='rounded-lg bg-gray-50 p-4'>
                           <ul className='space-y-2 text-left text-sm text-gray-600'>
