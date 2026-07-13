@@ -5,3 +5,7 @@ PyPDF2==3.0.1
 python-dotenv==1.0.0
 google-generativeai==0.3.2
 gtts==2.4.0
+opencv-python-headless==4.12.0.88
+numpy==2.2.6
+websockets==15.0.1
+faster-whisper>=1.1.1

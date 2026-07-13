@@ -9,7 +9,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 
 const ResumeForm = ({
@@ -18,7 +17,6 @@ const ResumeForm = ({
   isProfile = false,
   buttonText = null,
 }) => {
-  const { user } = useUser();
   const [formData, setFormData] = useState({
     name: '',
     email: '',

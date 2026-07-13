@@ -8,7 +8,6 @@ import Home from './pages/Home';
 import InterviewForm from './pages/InterviewForm';
 import InterviewPage from './pages/InterviewPage';
 import Profile from './pages/Profile';
-import Results from './pages/Results';
 
 const App = () => {
   const { getToken } = useAuth();
@@ -42,15 +41,7 @@ const App = () => {
             }
           />
           <Route
-            path='/results'
-            element={
-              <ProtectedRoute>
-                <Results />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/profile'
+            path='/profile/*'
             element={
               <ProtectedRoute>
                 <Profile />
@@ -64,3 +55,4 @@ const App = () => {
 };
 
 export default App;
+

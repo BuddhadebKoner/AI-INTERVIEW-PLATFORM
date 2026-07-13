@@ -8,7 +8,7 @@ import {
   User,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { interviewApi } from '../api/interviewApi';
 import { userApi } from '../api/userApi';
 import FileUpload from '../components/FileUpload';
@@ -471,12 +471,12 @@ const InterviewForm = () => {
                     </Button>
                     <p className='mt-6 text-sm text-gray-500'>
                       Or you can create your profile manually from the{' '}
-                      <a
-                        href='/profile'
+                      <Link
+                        to='/profile/account'
                         className='font-medium text-blue-600 hover:underline'
                       >
                         Profile page
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </div>
@@ -536,3 +536,4 @@ const InterviewForm = () => {
 };
 
 export default InterviewForm;
+

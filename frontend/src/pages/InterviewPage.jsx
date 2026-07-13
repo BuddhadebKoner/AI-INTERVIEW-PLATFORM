@@ -2,7 +2,7 @@ import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { interviewApi } from '../api/interviewApi';
-import VoiceInterview from '../components/VoiceInterview';
+import MeetingInterviewRoom from '../components/MeetingInterviewRoom';
 
 const InterviewPage = () => {
   const { id: interviewId } = useParams();
@@ -57,21 +57,7 @@ const InterviewPage = () => {
     );
   }
 
-  return (
-    <div className='min-h-screen bg-gray-50 py-8'>
-      <div className='mx-auto max-w-6xl'>
-        <div className='mb-6 text-center'>
-          <h1 className='mb-2 text-3xl font-bold'>Voice Interview Session</h1>
-          <p className='text-gray-600'>
-            Interview Type: {interview?.interviewType} | Language:{' '}
-            {interview?.language} | Complexity: {interview?.complexity}
-          </p>
-        </div>
-
-        <VoiceInterview interview={interview} />
-      </div>
-    </div>
-  );
+  return <MeetingInterviewRoom interview={interview} />;
 };
 
 export default InterviewPage;

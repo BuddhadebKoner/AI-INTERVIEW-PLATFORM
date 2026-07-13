@@ -1,15 +1,10 @@
 import { SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react';
-import {
-  ArrowRight,
-  Home,
-  Menu,
-  Sparkles,
-  User
-} from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight, Home as HomeIcon, Menu, Sparkles, User } from 'lucide-react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Button } from './ui/button';
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -17,23 +12,58 @@ import {
 } from './ui/sheet';
 
 const navItems = [
-  { label: 'Home', href: '/', type: 'route' },
-  { label: 'Features', href: '/#features', type: 'anchor' },
-  { label: 'How it Works', href: '/#how-it-works', type: 'anchor' },
-  { label: 'Pricing', href: '/#pricing', type: 'anchor' },
-  { label: 'Dashboard', href: '/profile', type: 'route' },
+  { label: 'Home', to: '/', end: true },
+  { label: 'Start Interview', to: '/form', end: true },
+  { label: 'Profile', to: '/profile', signedInOnly: true },
 ];
+
+const desktopNavClass = ({ isActive }) =>
+  `relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
+    isActive
+      ? 'bg-slate-900 text-white shadow-lg shadow-slate-300/60'
+      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+  }`;
+
+const mobileNavClass = ({ isActive }) =>
+  `flex items-center justify-between rounded-2xl border px-4 py-4 text-base font-medium transition-all duration-300 ${
+    isActive
+      ? 'border-slate-900 bg-slate-900 text-white'
+      : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+  }`;
 
 const Layout = ({ children }) => {
   const location = useLocation();
+  const isInterviewRoute = location.pathname.startsWith('/interview/');
 
-  const isActive = item => {
-    if (item.href === '/' && location.pathname === '/') return true;
-    if (item.href === '/profile' && location.pathname === '/profile') return true;
-    if (item.href === '/#features' || item.href === '/#how-it-works' || item.href === '/#pricing') {
-      return location.pathname === '/';
+  const renderDesktopItem = item => {
+    const link = (
+      <NavLink key={item.label} to={item.to} end={item.end} className={desktopNavClass}>
+        {item.label}
+      </NavLink>
+    );
+
+    if (item.signedInOnly) {
+      return <SignedIn key={item.label}>{link}</SignedIn>;
     }
-    return false;
+
+    return link;
+  };
+
+  const renderMobileItem = item => {
+    const link = (
+      <SheetClose key={item.label} asChild>
+        <NavLink to={item.to} end={item.end} className={mobileNavClass}>
+          <span>{item.label}</span>
+          <ArrowRight className='h-4 w-4' />
+        </NavLink>
+      </SheetClose>
+    );
+
+    if (item.signedInOnly) {
+      return <SignedIn key={item.label}>{link}</SignedIn>;
+    }
+
+    return link;
   };
 
   return (
@@ -53,24 +83,12 @@ const Layout = ({ children }) => {
               </div>
               <div>
                 <div className='text-lg font-semibold tracking-tight'>AI Interview</div>
-                <div className='text-xs text-slate-500'>Premium interview intelligence</div>
+                <div className='text-xs text-slate-500'>Practice, feedback, progress</div>
               </div>
             </Link>
 
             <nav className='hidden items-center gap-1 rounded-full border border-slate-200/70 bg-white/70 p-1.5 lg:flex'>
-              {navItems.map(item => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                    isActive(item)
-                      ? 'bg-slate-900 text-white shadow-lg shadow-slate-300/60'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.map(renderDesktopItem)}
             </nav>
 
             <div className='flex items-center gap-3'>
@@ -82,17 +100,20 @@ const Layout = ({ children }) => {
                 </SignInButton>
               </SignedOut>
               <SignedIn>
-                <Link to='/profile' className='hidden items-center gap-2 rounded-full border border-slate-200/80 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:inline-flex'>
+                <NavLink
+                  to='/profile'
+                  className={({ isActive }) =>
+                    `hidden items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:inline-flex ${
+                      isActive
+                        ? 'border-slate-900 bg-slate-900 text-white'
+                        : 'border-slate-200/80 bg-white text-slate-700'
+                    }`
+                  }
+                >
                   <User className='h-4 w-4' />
-                  Dashboard
-                </Link>
+                  Profile
+                </NavLink>
               </SignedIn>
-              <Link to='/form'>
-                <Button variant='gradient' size='sm' className='hidden sm:inline-flex'>
-                  Start Interview
-                  <ArrowRight className='h-4 w-4' />
-                </Button>
-              </Link>
 
               <div className='lg:hidden'>
                 <Sheet>
@@ -106,20 +127,7 @@ const Layout = ({ children }) => {
                       <SheetTitle className='text-xl'>Navigate</SheetTitle>
                     </SheetHeader>
                     <div className='mt-8 space-y-2'>
-                      {navItems.map(item => (
-                        <Link
-                          key={item.label}
-                          to={item.href}
-                          className={`flex items-center justify-between rounded-2xl border px-4 py-4 text-base font-medium transition-all duration-300 ${
-                            isActive(item)
-                              ? 'border-slate-900 bg-slate-900 text-white'
-                              : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-                          }`}
-                        >
-                          <span>{item.label}</span>
-                          <ArrowRight className='h-4 w-4' />
-                        </Link>
-                      ))}
+                      {navItems.map(renderMobileItem)}
                     </div>
                     <div className='mt-8 space-y-3 border-t border-slate-200 pt-6'>
                       <SignedOut>
@@ -129,11 +137,6 @@ const Layout = ({ children }) => {
                           </Button>
                         </SignInButton>
                       </SignedOut>
-                      <Link to='/form' className='block'>
-                        <Button variant='gradient' className='w-full rounded-full'>
-                          Start Interview
-                        </Button>
-                      </Link>
                     </div>
                   </SheetContent>
                 </Sheet>
@@ -143,20 +146,22 @@ const Layout = ({ children }) => {
         </div>
       </header>
 
-      <main className='relative'>{children}</main>
+      <main className={`relative ${isInterviewRoute ? 'overflow-hidden' : ''}`}>{children}</main>
 
-      <footer className='mt-20 border-t border-slate-200/80 bg-white/70 backdrop-blur-xl'>
-        <div className='mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8'>
+      {!isInterviewRoute && (
+        <footer className='mt-20 border-t border-slate-200/80 bg-white/70 backdrop-blur-xl'>
+          <div className='mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8'>
           <div>
             <p className='text-base font-medium text-slate-900'>AI Interview</p>
-            <p className='text-sm text-slate-500'>Premium interview preparation for modern teams.</p>
+            <p className='text-sm text-slate-500'>Practice interviews, review reports, and track progress.</p>
           </div>
           <div className='flex items-center gap-3 text-sm text-slate-500'>
-            <Home className='h-4 w-4' />
-            <span>Built for focused practice, feedback, and confidence.</span>
+            <HomeIcon className='h-4 w-4' />
+            <span>Built for focused practice and measurable improvement.</span>
           </div>
-        </div>
-      </footer>
+          </div>
+        </footer>
+      )}
     </div>
   );
 };
