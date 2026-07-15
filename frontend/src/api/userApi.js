@@ -41,6 +41,16 @@ export const userApi = {
       throw error.response?.data || error;
     }
   },
+
+  // Logout current user session
+  logout: async () => {
+    try {
+      const response = await api.post('/user/logout');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
 };
 
 export default userApi;

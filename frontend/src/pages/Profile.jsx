@@ -1,7 +1,8 @@
-import { useUser } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import { Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { setAuthToken } from '../api/axios';
 import { interviewApi } from '../api/interviewApi';
 import { userApi } from '../api/userApi';
 import { Alert } from '../components/ui/alert';
@@ -16,11 +17,14 @@ import ReportsPage from './profile/ReportsPage';
 import { getDisplayName } from './profile/profileHelpers';
 
 const Profile = () => {
+  const { signOut } = useAuth();
   const { user } = useUser();
+  const navigate = useNavigate();
   const [userProfile, setUserProfile] = useState(null);
   const [interviews, setInterviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchDashboard = useCallback(async () => {
@@ -44,10 +48,15 @@ const Profile = () => {
       }
     }
 
-    if (interviewsResult.status === 'fulfilled' && interviewsResult.value.success) {
+    if (
+      interviewsResult.status === 'fulfilled' &&
+      interviewsResult.value.success
+    ) {
       setInterviews(interviewsResult.value.data || []);
     } else if (interviewsResult.status === 'rejected') {
-      errors.push(interviewsResult.reason?.message || 'Failed to load interviews.');
+      errors.push(
+        interviewsResult.reason?.message || 'Failed to load interviews.',
+      );
     }
 
     setError(errors.length ? errors.join(' ') : null);
@@ -69,15 +78,39 @@ const Profile = () => {
   }, []);
 
   const handleDeleteInterview = useCallback(async id => {
-    if (!window.confirm('Delete this interview? This cannot be undone.')) return;
+    if (!window.confirm('Delete this interview? This cannot be undone.'))
+      return;
 
     try {
       await interviewApi.deleteInterview(id);
-      setInterviews(current => current.filter(interview => interview._id !== id));
+      setInterviews(current =>
+        current.filter(interview => interview._id !== id),
+      );
     } catch (err) {
       setError(err.message || 'Failed to delete interview.');
     }
   }, []);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      setLoggingOut(true);
+      setError(null);
+
+      try {
+        await userApi.logout();
+      } catch (logoutError) {
+        console.error('Backend logout error:', logoutError);
+      }
+
+      setAuthToken(null);
+      await signOut();
+      navigate('/');
+    } catch (err) {
+      setError(err.message || 'Failed to logout. Please try again.');
+    } finally {
+      setLoggingOut(false);
+    }
+  }, [navigate, signOut]);
 
   useEffect(() => {
     fetchDashboard();
@@ -92,7 +125,9 @@ const Profile = () => {
         <Card className='w-full max-w-sm bg-white/90'>
           <CardContent className='p-8 text-center'>
             <Loader2 className='mx-auto h-10 w-10 animate-spin text-indigo-600' />
-            <p className='mt-4 font-medium text-slate-700'>Loading profile dashboard...</p>
+            <p className='mt-4 font-medium text-slate-700'>
+              Loading profile dashboard...
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -111,7 +146,9 @@ const Profile = () => {
                   <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className='min-w-0'>
-                  <p className='truncate font-semibold text-slate-950'>{displayName}</p>
+                  <p className='truncate font-semibold text-slate-950'>
+                    {displayName}
+                  </p>
                   <p className='truncate text-sm text-slate-500'>{role}</p>
                 </div>
               </div>
@@ -135,9 +172,18 @@ const Profile = () => {
           <Routes>
             <Route
               index
-              element={<OverviewPage userProfile={userProfile} user={user} interviews={interviews} />}
+              element={
+                <OverviewPage
+                  userProfile={userProfile}
+                  user={user}
+                  interviews={interviews}
+                />
+              }
             />
-            <Route path='overview' element={<Navigate to='/profile' replace />} />
+            <Route
+              path='overview'
+              element={<Navigate to='/profile' replace />}
+            />
             <Route
               path='interviews'
               element={
@@ -149,14 +195,22 @@ const Profile = () => {
                 />
               }
             />
-            <Route path='reports' element={<ReportsPage interviews={interviews} />} />
-            <Route path='reports/:id' element={<ReportDetailPage interviews={interviews} />} />
+            <Route
+              path='reports'
+              element={<ReportsPage interviews={interviews} />}
+            />
+            <Route
+              path='reports/:id'
+              element={<ReportDetailPage interviews={interviews} />}
+            />
             <Route
               path='account'
               element={
                 <AccountPage
                   userProfile={userProfile}
                   onProfileSaved={setUserProfile}
+                  onLogout={handleLogout}
+                  loggingOut={loggingOut}
                 />
               }
             />

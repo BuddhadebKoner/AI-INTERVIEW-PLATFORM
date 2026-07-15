@@ -2,6 +2,7 @@ import express from 'express';
 import {
   deleteUserProfile,
   getUserProfile,
+  logoutUser,
   saveUserProfile,
   updateUserProfile,
 } from '../controllers/user.controller.js';
@@ -21,6 +22,9 @@ router.get('/profile', getUserProfile);
 // Update user profile (PUT/PATCH)
 router.put('/profile', updateUserProfile);
 router.patch('/profile', updateUserProfile);
+
+// Logout and revoke current session (POST)
+router.post('/logout', logoutUser);
 
 // Delete user profile (DELETE)
 router.delete('/profile', deleteUserProfile);

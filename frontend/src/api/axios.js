@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
     GET_PROFILE: '/user/profile',
     UPDATE_PROFILE: '/user/profile',
     DELETE_PROFILE: '/user/profile',
+    LOGOUT: '/user/logout',
   },
   INTERVIEW: {
     CREATE: '/interview',

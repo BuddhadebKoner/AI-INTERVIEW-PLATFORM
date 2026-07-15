@@ -1,3 +1,4 @@
+import { clerkClient } from '@clerk/express';
 import { User } from '../models/user.js';
 
 // Create or update user profile with resume data
@@ -173,9 +174,36 @@ export const deleteUserProfile = async (req, res) => {
   }
 };
 
+// Revoke the current Clerk session
+export const logoutUser = async (req, res) => {
+  try {
+    const sessionId = req.auth?.sessionId;
+
+    if (sessionId) {
+      await clerkClient.sessions.revokeSession(sessionId);
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Logged out successfully',
+    });
+  } catch (error) {
+    console.error('Logout error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to logout',
+      error:
+        process.env.NODE_ENV === 'development'
+          ? error.message
+          : 'Internal server error',
+    });
+  }
+};
+
 export default {
   saveUserProfile,
   getUserProfile,
   updateUserProfile,
   deleteUserProfile,
+  logoutUser,
 };
